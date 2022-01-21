@@ -1,213 +1,254 @@
 <!-- home -->
 <template>
-	<div>
-		<div class="warpper">
-			<van-sticky :offset-top="0">
-				<van-search background="#fff" shape="round" placeholder="请输入搜索关键词" @focus="onfocus" />
-			</van-sticky>
-			<!-- 搜索end -->
-			<van-swipe :autoplay="3000" class="my-swipe" style="margin-top: 5px;">
-				<van-swipe-item v-for="(image, index) in slideshowList" :key="index">
-					<img v-lazy="imgUrls+image.pic" />
-				</van-swipe-item>
-			</van-swipe>
-			<!-- 轮播图end -->
-			<div style="background-color: #FFFFFF;margin-top: 5px;">
-				<div style="margin-top: 5px;">
-					<van-grid :column-num="4" :border="false">
-						<template v-for="(item,index) in menus">
-							<van-grid-item :to="item.url">
-								<van-image width="50" height="50" :src="imgUrls+item.pic" />
-								<span>
-									<font size="3" color="">{{item.name}}</font>
-								</span>
-							</van-grid-item>
-						</template>
-					</van-grid>
-				</div>
-			</div>
-			<!-- 宫格end -->
-			<!-- 热门 新品end -->
-			<div style="width: 100%;background-color: #FFFFFF;margin-top: 10px;">
-				<div style="height: 28px;line-height: 35px;padding: 5px;">
-					<font size="3">精品推荐：</font>
-				</div>
-				<div style="margin-top: 10px;">
-					<van-grid :column-num="2" :border="false">
-						<van-grid-item v-for="(item, index) in bastList" :key="index"
-							:to="'/productDetails?id='+item.id">
-							<van-image :src="imgUrls+item.image" height="140" />
-							<span>
-								<font size="2">{{ item.storeName }}</font>
-							</span>
-							<span>
-								<font size="4" color="#ff8001">￥{{ item.price }}</font>
-								<font size="2" color="#C0C4CC" style="text-decoration:line-through">￥{{item.otPrice}}
-								</font>
-							</span>
-						</van-grid-item>
-					</van-grid>
-				</div>
-			</div>
-			<div style="width: 100%;background-color: #FFFFFF;margin-top: 10px;">
-				<div style="height: 28px;line-height: 35px;padding: 5px;">
-					<font size="3">猜你喜欢：</font>
-				</div>
-				<div style="margin-top: 10px;">
-					<van-card
-					@click="goto('/productDetails?id='+item.id)"
-					style="background-color: #fff;"
-					 v-for="(item, index) in guesslikes" :key="index"
-					  tag="Like"
-					  :desc="item.storeInfo"
-					  :title="item.storeName"
-					  :thumb="imgUrls+item.image"
-					  :origin-price="item.otPrice"
-					>
-					 <template #price>
-					    <font color="#EE883B" size="4">￥{{item.price}}</font>
-					  </template>
-					</van-card>
-				</div>
-			</div>
-			<!-- 商品列表end -->
-		</div>
+  <div>
+    <!-- 搜索end -->
+    <div class="warpper">
+      <van-sticky :offset-top="0">
+        <van-search
+          shape="round"
+          placeholder="请输入搜索关键词"
+          @focus="onfocus"
+        />
+      </van-sticky>
 
-	</div>
+      <!-- 轮播图end -->
+      <van-swipe :autoplay="3000" class="my-swipe" style="margin-top: 5px">
+        <van-swipe-item v-for="(image, index) in bannerData" :key="index">
+          <img v-lazy="imgUrls + image.pic" />
+        </van-swipe-item>
+      </van-swipe>
+      <!-- 菜单 -->
+      <div style="background-color: #ffffff; margin-top: 5px">
+        <div style="margin-top: 5px">
+          <van-grid :column-num="4" :border="false">
+            <template v-for="(item, index) in menus">
+              <van-grid-item :key="index" :to="item.url">
+                <van-image width="50" height="50" :src="imgUrls + item.pic" />
+                <span>
+                  <font size="3" color="">{{ item.name }}</font>
+                </span>
+              </van-grid-item>
+            </template>
+          </van-grid>
+        </div>
+      </div>
+
+      <!-- 热门 新品end -->
+      <div class="warp">
+        <div
+          class="shadow-box"
+          style="width: 100%; background-color: #ffffff; margin-top: 8px"
+        >
+          <div style="height: 28px; line-height: 35px; padding: 5px">
+            <font size="3" style="    margin-left: 5px;">限时秒杀</font>
+			<font size="2" class="float-left">秒杀专区<van-icon name="arrow" /></font>
+          </div>
+          <div style="margin-top: 10px">
+            <van-grid square :column-num="4" :border="false">
+              <van-grid-item
+                v-for="(item, index) in bastList"
+                style="margin-bottom: 10px"
+                :key="index"
+                :to="'/productDetails?id=' + item.id"
+              >
+                <van-image :src="imgUrls + item.image" height="126" />
+                <div>
+                  <font size="3">￥{{ item.price.toFixed(2) }}</font>
+                </div>
+              </van-grid-item>
+            </van-grid>
+          </div>
+        </div>
+        <div
+          class="shadow-box"
+          style="width: 100%; background-color: #ffffff; margin-top: 8px"
+        >
+          <div style="height: 28px; line-height: 35px; padding: 5px">
+            <font size="3" style="    margin-left: 5px;">猜你喜欢</font>
+			<font size="2" class="float-left">更多商品<van-icon name="arrow" /></font>
+          </div>
+          <div style="margin-top: 10px">
+            <van-grid square :column-num="4" :border="false">
+              <van-grid-item
+                v-for="(item, index) in bastList"
+                style="margin-bottom: 10px"
+                :key="index"
+                :to="'/productDetails?id=' + item.id"
+              >
+                <van-image :src="imgUrls + item.image" height="126" />
+                <div>
+                  <font size="3">￥{{ item.price.toFixed(2) }}</font>
+                </div>
+              </van-grid-item>
+            </van-grid>
+          </div>
+        </div>
+        <div
+          class="shadow-box"
+          style="width: 100%; background-color: #ffffff; margin-top: 8px"
+        >
+          <div style="height: 28px; line-height: 35px; padding: 5px">
+            <font size="3" style="    margin-left: 5px;">热门臻选</font>
+			<font size="2" class="float-left">更多商品<van-icon name="arrow" /></font>
+			
+          </div>
+          <div style="margin-top: 10px">
+            <van-card
+              @click="goto('/productDetails?id=' + item.id)"
+              style="background-color: #fff"
+              v-for="(item, index) in guesslikes"
+              :key="index"
+              tag="热门"
+              :desc="item.store_info"
+              :title="item.store_name"
+              :thumb="imgUrls + item.image"
+              :origin-price="item.ot_price.toFixed(2)"
+            >
+              <template #price>
+                <font color="#EE883B" size="4"
+                  >￥{{ item.price.toFixed(2) }}</font
+                >
+              </template>
+            </van-card>
+          </div>
+        </div>
+        <!-- 商品列表end -->
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-	import {
-		getData,
-		groupList,
-		getMenus,
-		getLike,
-		getCombinationList,
-		getBastList,
-		getBanner
-	} from "@/api/home.js"
-	export default {
-		data() {
-			return {
-				imgUrls: this.$baseApi,
-				menus: [],
-				groupLists: [],
-				bastList: [],
-				slideshowList: [],
-				guesslikes: [],
-				value: '',
-			};
-		},
+import { getMenus, getLike, getBastList, getBanner } from "@/api/home.js";
+export default {
+  data() {
+    return {
+      imgUrls: this.$baseUrl,
+      menus: [],
+      groupLists: [],
+      bastList: [],
+      bannerData: [],
+      guesslikes: [],
+      value: "",
+    };
+  },
 
-		created() {
-			this.getData();
-		},
-		methods: {
-			getData() {
-				getMenus().then(res => {
-					this.menus = res.data
-				})
-				getLike().then(res => {
-					this.guesslikes = res.data
-				})
+  created() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      getMenus().then((res) => {
+        this.menus = res.Data;
+      });
+      getLike().then((res) => {
+        this.guesslikes = res.Data.Data;
+      });
 
-				getBastList().then(res => {
-					this.bastList = res.data
-				})
-				getBanner().then(res => {
-					this.slideshowList = res.data
-				})
-			},
-			goto(url) {
-				this.$router.push(url)
-			},
-			onfocus() {
-				this.$router.push("/search")
-			},
-		},
-	};
+      getBastList().then((res) => {
+        this.bastList = res.Data.Data;
+      });
+      getBanner().then((res) => {
+        this.bannerData = res.Data;
+      });
+    },
+    goto(url) {
+      this.$router.push(url);
+    },
+    onfocus() {
+      this.$router.push("/search");
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
-	.warpper {
-		background-color: #F8F8F8;
-		padding: 5px;
-	}
+.warp {
+  padding: 0 5px;
+  .float-left{
+	color: gray;
+    float: right;
+    margin-right: 5px;
+  }
+}
+.warpper {
+  background-color: #f8f8f8;
+  padding: 5px;
+}
 
-	.my-swipe .van-swipe-item img {
-		width: 100%;
-		height: 200px;
-	}
+.my-swipe .van-swipe-item img {
+  width: 100%;
+  height: 200px;
+}
 
-	.my-swipe {
-		margin-top: 5px;
-		margin-bottom: 7px;
-		height: 180px;
-	}
+.my-swipe {
+  margin-top: 5px;
+  margin-bottom: 7px;
+  height: 180px;
+}
 
-	// 滚动条
-	.item {
-		margin: 5px;
-		width: 31.3%;
-		white-space: nowrap;
-		display: inline-block;
-	}
+// 滚动条
+.item {
+  margin: 5px;
+  width: 31.3%;
+  white-space: nowrap;
+  display: inline-block;
+}
 
-	.scroll {
-		padding: 5px;
-		margin-top: 8px;
-		background-color: #fff;
-		text-align: center;
-		white-space: nowrap;
-		overflow-x: scroll;
-		overflow-y: hidden;
-	}
+.scroll {
+  padding: 5px;
+  margin-top: 8px;
+  background-color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
 
-	::-webkit-scrollbar {
-		display: none;
-	}
+::-webkit-scrollbar {
+  display: none;
+}
 
-	// 滚动条
-	.grid2 /deep/ .van-hairline {
-		align-items: flex-start;
-	}
+// 滚动条
+.grid2 /deep/ .van-hairline {
+  align-items: flex-start;
+}
 
-	.grid2 {
-		background-color: #F8F8F8;
-		margin-top: 8px;
+.grid2 {
+  background-color: #f8f8f8;
+  margin-top: 8px;
+}
 
-	}
+.colon {
+  display: inline-block;
+  margin: 0 4px;
+  color: #ee0a24;
+}
 
-	.colon {
-		display: inline-block;
-		margin: 0 4px;
-		color: #ee0a24;
-	}
+.block {
+  display: inline-block;
+  margin-left: 8px;
+  height: 18px;
+  width: 18px;
+  color: #fff;
+  font-size: 5px;
+  text-align: center;
+  background-color: #ff8001;
+}
 
-	.block {
-		display: inline-block;
-		margin-left: 8px;
-		height: 18px;
-		width: 18px;
-		color: #fff;
-		font-size: 5px;
-		text-align: center;
-		background-color: #ff8001;
-	}
+.classifys {
+  height: 35px;
+  line-height: 35px;
+  padding: 15px;
+}
 
-	.classifys {
-		height: 35px;
-		line-height: 35px;
-		padding: 15px;
-	}
+.activity {
+  background-color: #ffffff;
+  margin-top: 10px;
+  padding: 5px;
+}
 
-	.activity {
-		background-color: #FFFFFF;
-		margin-top: 10px;
-		padding: 5px;
-	}
-
-	.activity-col {
-		padding: 10px;
-		background-color: #ffe3ce;
-	}
+.activity-col {
+  padding: 10px;
+  background-color: #ffe3ce;
+}
 </style>

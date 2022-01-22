@@ -5,18 +5,9 @@
 		<div class="right-top-sign"></div>
 		<!-- 设置白色背景防止软键盘把下部绝对定位元素顶上来盖住输入框等 -->
 		<div class="wrapper">
-			<div class="left-top-sign">LOGIN</div>
+			<div class="left-top-sign">意象商城</div>
 			<div class="welcome"> 登录 </div>
 			<div class="input-content">
-				<!-- 	<div class="input-item">
-					<text class="tit">手机号码</text>
-					<input type="number" :value="mobile" placeholder="请输入手机号码" maxlength="11" data-key="mobile" />
-				</div>
-				<div class="input-item">
-					<text class="tit">密码</text>
-					<input type="mobile" value="" placeholder="请输入密码" placeholder-class="input-empty" maxlength="20"
-						password data-key="password" />
-				</div> -->
 				<van-form @submit="onSubmit">
 					<van-field v-model="username" name="username" label="用户名" placeholder="用户名"
 						:rules="[{ required: true, message: '请填写用户名' }]" />
@@ -28,7 +19,6 @@
 				</van-form>
 
 			</div>
-			<!-- <div class="forget-section"> 忘记密码? </div> -->
 		</div>
 		<div class="register-section">
 			还没有账号?

@@ -40,13 +40,15 @@
           style="width: 100%; background-color: #ffffff; margin-top: 8px"
         >
           <div style="height: 28px; line-height: 35px; padding: 5px">
-            <font size="3" style="    margin-left: 5px;">限时秒杀</font>
-			<font size="2" class="float-left">秒杀专区<van-icon name="arrow" /></font>
+            <font size="3" style="margin-left: 5px">限时秒杀</font>
+            <font size="2" class="float-left"
+              >秒杀专区<van-icon name="arrow"
+            /></font>
           </div>
           <div style="margin-top: 10px">
             <van-grid square :column-num="4" :border="false">
               <van-grid-item
-                v-for="(item, index) in bastList"
+                v-for="(item, index) in guesslikes"
                 style="margin-bottom: 10px"
                 :key="index"
                 :to="'/productDetails?id=' + item.id"
@@ -64,39 +66,16 @@
           style="width: 100%; background-color: #ffffff; margin-top: 8px"
         >
           <div style="height: 28px; line-height: 35px; padding: 5px">
-            <font size="3" style="    margin-left: 5px;">猜你喜欢</font>
-			<font size="2" class="float-left">更多商品<van-icon name="arrow" /></font>
-          </div>
-          <div style="margin-top: 10px">
-            <van-grid square :column-num="4" :border="false">
-              <van-grid-item
-                v-for="(item, index) in bastList"
-                style="margin-bottom: 10px"
-                :key="index"
-                :to="'/productDetails?id=' + item.id"
-              >
-                <van-image :src="imgUrls + item.image" height="126" />
-                <div>
-                  <font size="3">￥{{ item.price.toFixed(2) }}</font>
-                </div>
-              </van-grid-item>
-            </van-grid>
-          </div>
-        </div>
-        <div
-          class="shadow-box"
-          style="width: 100%; background-color: #ffffff; margin-top: 8px"
-        >
-          <div style="height: 28px; line-height: 35px; padding: 5px">
-            <font size="3" style="    margin-left: 5px;">热门臻选</font>
-			<font size="2" class="float-left">更多商品<van-icon name="arrow" /></font>
-			
+            <font size="3" style="margin-left: 5px">热门臻选</font>
+            <font size="2" class="float-left"
+              >更多商品<van-icon name="arrow"
+            /></font>
           </div>
           <div style="margin-top: 10px">
             <van-card
               @click="goto('/productDetails?id=' + item.id)"
               style="background-color: #fff"
-              v-for="(item, index) in guesslikes"
+              v-for="(item, index) in hotList"
               :key="index"
               tag="热门"
               :desc="item.store_info"
@@ -112,23 +91,75 @@
             </van-card>
           </div>
         </div>
-        <!-- 商品列表end -->
+        <!-- 猜你喜欢end -->
+        <div style="height: 32px; line-height: 35px; padding: 5px">
+          <div style="position: relative">
+            <img style="position: absolute" width="100%" :src="titleImg" />
+            <h3
+              style="
+                text-align: center;
+                margin: 0;
+                line-height: 43px;
+                font-size: 17px;
+              "
+            >
+              猜你喜欢
+            </h3>
+          </div>
+        </div>
+        <van-row gutter="10">
+          <van-col
+            @click="$router.push('/productDetails?id=' + item.id)"
+            style="margin-bottom: 10px"
+            v-for="(item, index) in guesslikes"
+            :key="index"
+            span="12"
+          >
+            <div class="shadow-box good-card">
+              <div>
+                <van-image
+                  width="100%"
+                  height="180px"
+                  :src="imgUrls + item.image"
+                />
+              </div>
+              <div class="tip">
+                {{ item.store_info }}
+              </div>
+              <div class="title">
+                <div>
+                  {{ item.store_name }}
+                </div>
+              </div>
+              <div class="price">
+                <font color="#f10404" style="margin-left:5px;font-size: 16px">
+                  <font size="2">￥</font>{{ item.price.toFixed(2) }}</font
+                >
+                <font style="float: right; margin-right: 10px; color: gray"
+                  >仅剩：{{ item.stock }}件</font
+                >
+              </div>
+            </div></van-col
+          >
+        </van-row>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getMenus, getLike, getBastList, getBanner } from "@/api/home.js";
+import titleImg from "@/assets/title1.png";
+import { getMenus, getLike, getHotList, getBanner } from "@/api/home.js";
 export default {
   data() {
     return {
       imgUrls: this.$baseUrl,
       menus: [],
       groupLists: [],
-      bastList: [],
+      hotList: [],
       bannerData: [],
       guesslikes: [],
+      titleImg,
       value: "",
     };
   },
@@ -145,8 +176,8 @@ export default {
         this.guesslikes = res.Data.Data;
       });
 
-      getBastList().then((res) => {
-        this.bastList = res.Data.Data;
+      getHotList().then((res) => {
+        this.hotList = res.Data.Data;
       });
       getBanner().then((res) => {
         this.bannerData = res.Data;
@@ -163,9 +194,42 @@ export default {
 </script>
 <style lang="scss" scoped>
 .warp {
+  .good-card {
+    .price {
+      padding-top: 5px;
+      margin: 0px 5px;
+      font-size: 12px;
+      height: 40px;
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 400;
+      padding: 0 11px;
+      min-height: 50px;
+      > div {
+        margin: 10px 0;
+      }
+    }
+    .tip {
+      width: 190px;
+      line-height: 30px;
+      background: #f6f2ea;
+      font-size: 12px;
+      font-weight: 400;
+      color: #a8700d;
+      padding: 0 11px;
+    }
+    border-radius: 10px;
+    /deep/ .van-image {
+      img {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+    }
+  }
   padding: 0 5px;
-  .float-left{
-	color: gray;
+  .float-left {
+    color: gray;
     float: right;
     margin-right: 5px;
   }

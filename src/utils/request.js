@@ -5,7 +5,6 @@ import {
 } from 'vant'
 import Vue from 'vue';
 import router from '@/router'
-
 // 根据环境不同引入不同api地址
 import Cookies from 'js-cookie'
 import {
@@ -46,19 +45,19 @@ service.interceptors.response.use(
     response => {
         Toast.clear()
         const res = response.data
-        if (res.status && res.status !== 200) {
+        if (res.Code && res.Code !== 200) {
             // 登录超时,重新登录
-            if (res.status == '401') {
+            if (res.Code == '401') {
                 router.push({ path: "/login" })
                 Cookies.set('Token', "", -1);
                 sessionStorage.clear();
             }
-            if (res.msg != "非法访问") {
+            if (res.Msg != "非法访问") {
 
-                Toast.fail(res.msg)
+                Toast.fail(res.Msg)
             }
-            if (res.status == '500') {
-                router.push({ name: 'NullPage', params: { msg: res.msg } })
+            if (res.Code == '500') {
+                router.push({ name: 'NullPage', params: { msg: res.Msg } })
             }
             return Promise.reject(res || 'error')
         } else {

@@ -9,10 +9,10 @@ export function getBanner() {
 		method: 'get'
 	})
 }
-//首页 精品推荐
-export function getBastList() {
+//首页 热门推荐
+export function getHotList() {
 	return request({
-		url: '/index/bastList',
+		url: '/index/hotList',
 		method: 'get'
 	})
 }
@@ -36,6 +36,6 @@ export function getMenus() {
 export default {
 	getMenus,
 	getLike,
-	getBastList,
+	getHotList,
 	getBanner
 }

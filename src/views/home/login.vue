@@ -75,7 +75,7 @@
 								message: '正在登录中',
 							});
 							if (res.status == 200) {
-								vm.$store.dispatch("SaveUser", res.data)
+								vm.$store.dispatch("SaveUser", res.Data)
 								toast.message = "登录成功"
 								toast.icon = "success"
 								toast.clear();

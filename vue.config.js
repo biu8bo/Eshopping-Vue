@@ -1,3 +1,4 @@
+
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/config/index.js')
@@ -18,6 +19,7 @@ module.exports = {
   devServer: {
     port: 80, // 端口
     open: false, // 启动后打开浏览器
+    proxy: defaultSettings.baseApi,  // 后台接口域名
     overlay: {
       //  当出现编译器错误或警告时，在浏览器中显示全屏覆盖层
       warnings: false,

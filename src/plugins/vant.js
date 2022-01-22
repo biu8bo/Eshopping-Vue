@@ -1,6 +1,6 @@
 // 按需全局引入 vant组件
 import Vue from 'vue'
-import { Button,Area,Tab,Empty ,Form,Sticky , Tabs,Rate,Uploader ,Calendar ,AddressList  ,SwipeCell ,Sidebar, SidebarItem,TreeSelect ,Switch ,ContactEdit ,ContactList ,ContactCard ,Field,RadioGroup, Radio , Checkbox, CheckboxGroup,Popup,Stepper,Tag,SubmitBar,CellGroup, Card,List,Sku,Divider,ActionSheet, GoodsAction, GoodsActionIcon, GoodsActionButton,CouponCell, CouponList,Cell,NavBar, Tabbar, TabbarItem ,Lazyload ,Search , Swipe, SwipeItem ,Toast,Grid, GridItem,Image as VanImage ,Skeleton,Col, Row,CountDown,Icon} from 'vant'
+import { Button,Area,Tab,Empty ,Form,Sticky,Loading , Tabs,Rate,Uploader ,Calendar ,AddressList  ,SwipeCell ,Sidebar, SidebarItem,TreeSelect ,Switch ,ContactEdit ,ContactList ,ContactCard ,Field,RadioGroup, Radio , Checkbox, CheckboxGroup,Popup,Stepper,Tag,SubmitBar,CellGroup, Card,List,Sku,Divider,ActionSheet, GoodsAction, GoodsActionIcon, GoodsActionButton,CouponCell, CouponList,Cell,NavBar, Tabbar, TabbarItem ,Lazyload ,Search , Swipe, SwipeItem ,Toast,Grid, GridItem,Image as VanImage ,Skeleton,Col, Row,CountDown,Icon} from 'vant'
 Vue.use(Button)
 Vue.use(Cell)
 Vue.use(List)
@@ -56,3 +56,9 @@ Vue.use(Checkbox);
 Vue.use(Field);
 Vue.use(CheckboxGroup);
 Vue.use(Tabbar).use(TabbarItem)
+
+Vue.use(Loading);
+//全局返回
+Vue.prototype.$backPage = ()=>{
+    window.history.back()
+}

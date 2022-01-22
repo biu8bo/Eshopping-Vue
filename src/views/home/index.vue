@@ -110,7 +110,7 @@
         <van-row gutter="10">
           <van-col
             @click="$router.push('/productDetails?id=' + item.id)"
-            style="margin-bottom: 10px"
+            style="margin-bottom: 5px"
             v-for="(item, index) in guesslikes"
             :key="index"
             span="12"

@@ -10,7 +10,18 @@ export const constantRouterMap = [{
 		title: '首页',
 		keepAlive: false
 	},
+	
 	children: [{
+		path: '/nullPage',
+		name: 'NullPage',
+		component: () => import('@/views/home/nullPage'),
+		meta: {
+			title: '出错啦！',
+			keepAlive: false,
+			tabBar:false,
+			navBar:true
+		}
+	},{
 			path: '/home',
 			name: 'Home',
 			component: () => import('@/views/home/index'),
@@ -41,6 +52,28 @@ export const constantRouterMap = [{
 				title: '登录',
 				keepAlive: false,
 				tabBar:false,
+				navBar:false
+			}
+		},
+		{
+			path: '/search',
+			name: 'Search',
+			component: () => import('@/views/search/Search'),
+			meta: {
+				title: '搜索商品',
+				keepAlive: false,
+				tabBar:true,
+				navBar:false
+			}
+		},
+		{
+			path: '/ProductList',
+			name: 'ProductList',
+			component: () => import('@/views/product/ProductList'),
+			meta: {
+				title: '全部商品',
+				keepAlive: false,
+				tabBar:true,
 				navBar:false
 			}
 		},

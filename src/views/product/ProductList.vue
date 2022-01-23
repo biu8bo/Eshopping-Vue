@@ -33,9 +33,13 @@
         <template #title>
           <span>价格</span>
           <div style="position: absolute; left: 70px; top: 8px">
-            <van-icon :color="(priceOrder=='desc'?'gray':'')" style="font-weight: bold" name="arrow-up" />
             <van-icon
-            :color="(priceOrder=='asc'?'gray':'')"
+              :color="priceOrder == 'desc' ? 'gray' : ''"
+              style="font-weight: bold"
+              name="arrow-up"
+            />
+            <van-icon
+              :color="priceOrder == 'asc' ? 'gray' : ''"
               style="
                 font-weight: bold;
                 position: absolute;
@@ -53,10 +57,12 @@
             <span>销量</span>
             <div style="position: absolute; left: 70px; top: 8px">
               <van-icon
-               :color="(salesOrder=='desc'?'gray':'')"
-               style="font-weight: bold" name="arrow-up" />
+                :color="salesOrder == 'desc' ? 'gray' : ''"
+                style="font-weight: bold"
+                name="arrow-up"
+              />
               <van-icon
-               :color="(salesOrder=='asc'?'gray':'')"
+                :color="salesOrder == 'asc' ? 'gray' : ''"
                 style="
                   font-weight: bold;
                   position: absolute;
@@ -90,17 +96,22 @@
                 :src="$baseUrl + item.image"
               />
             </div>
-            <div class="tip">
-              {{ item.store_info }}
-            </div>
             <div class="title">
               <div>
                 {{ item.store_name }}
               </div>
             </div>
+            <div>
+              <font
+                color="#f10404"
+                style="margin-left: 5px; font-size: 20px; font-weight: 550"
+              >
+                <font size="3">￥</font>{{ item.price.toFixed(2) }}</font
+              >
+            </div>
             <div class="price">
-              <font color="#f10404" style="margin-left: 5px; font-size: 16px">
-                <font size="2">￥</font>{{ item.price.toFixed(2) }}</font
+              <font style="margin-top:2px;margin-left: 5px;font-size: 14px; font-weight: 550">
+                <s>¥{{ item.ot_price.toFixed(2) }}</s></font
               >
               <font style="float: right; margin-right: 10px; color: gray"
                 >累计售出{{ item.sales }}件</font
@@ -116,8 +127,24 @@
       image="https://img01.yzcdn.cn/vant/custom-empty-image.png"
       description="暂无商品，去看点别的吧"
     />
-    <div @click="more" style="text-align:center;height:30px;line-height:30px;font-size:15px" v-if="hasNext">
-      <span>点击加载更多</span> <van-loading v-if="loading" color="#0094ff" size="20px" style="display: inline-block;position:none" type="spinner" />
+    <div
+      @click="more"
+      style="
+        text-align: center;
+        height: 30px;
+        line-height: 30px;
+        font-size: 15px;
+      "
+      v-if="hasNext"
+    >
+      <span>点击加载更多</span>
+      <van-loading
+        v-if="loading"
+        color="#0094ff"
+        size="20px"
+        style="display: inline-block; position: none"
+        type="spinner"
+      />
     </div>
   </div>
 </template>
@@ -134,10 +161,10 @@ export default {
       priceOrder: null,
       isNew: null,
       salesOrder: null,
-      page:1,
-      limit:10,
-      hasNext:false,
-      loading:false
+      page: 1,
+      limit: 10,
+      hasNext: false,
+      loading: false,
     };
   },
   created() {
@@ -149,10 +176,10 @@ export default {
 
   methods: {
     //点击加载更多
-    more(){
-      this.loading = true
+    more() {
+      this.loading = true;
       this.page++;
-      this.Search()
+      this.Search();
     },
     //切换触发
     changeSearch(n, o) {
@@ -205,12 +232,12 @@ export default {
         isIntegral: this.isIntegral,
         isNew: this.isNew,
         salesOrder: this.salesOrder,
-        page:this.page,
-        limit:this.limit
+        page: this.page,
+        limit: this.limit,
       }).then((resp) => {
         this.productData.push(...resp.Data.Data);
-        this.hasNext = resp.Data.HasNext
-         this.loading = false
+        this.hasNext = resp.Data.HasNext;
+        this.loading = false;
       });
     },
     //搜索触发
@@ -227,6 +254,7 @@ export default {
 
 <style scoped lang="scss">
 .good-card {
+  background: white;
   .price {
     padding-top: 5px;
     margin: 0px 5px;
@@ -234,12 +262,17 @@ export default {
     height: 40px;
   }
   .title {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 400;
     padding: 0 11px;
-    min-height: 50px;
+    min-height: 25px;
+
     > div {
       margin: 10px 0;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
   .tip {

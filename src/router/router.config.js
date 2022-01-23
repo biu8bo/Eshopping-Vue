@@ -67,6 +67,17 @@ export const constantRouterMap = [{
 			}
 		},
 		{
+			path: '/productDetails',
+			name: 'ProductDetails',
+			component: () => import('@/views/product/ProductDetails'),
+			meta: {
+				title: '商品详情',
+				keepAlive: false,
+				tabBar:true,
+				navBar:true
+			}
+		},
+		{
 			path: '/ProductList',
 			name: 'ProductList',
 			component: () => import('@/views/product/ProductList'),

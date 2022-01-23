@@ -14,7 +14,9 @@
 		border-radius: 8px;
 		margin-top: 5px;
 	}
-
+	.warpper{
+		padding:0 8px;
+	}
 	html {
 		background-color: #FFFFFF;
 	}

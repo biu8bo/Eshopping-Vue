@@ -107,15 +107,16 @@
             </h3>
           </div>
         </div>
-        <van-row gutter="10">
+        <van-row gutter="8">
           <van-col
             @click="$router.push('/productDetails?id=' + item.id)"
-            style="margin-bottom: 5px"
+            style="margin-bottom: 8px"
             v-for="(item, index) in guesslikes"
             :key="index"
             span="12"
+           
           >
-            <div class="shadow-box good-card">
+            <div  class="good-card shadow-box">
               <div>
                 <van-image
                   width="100%"
@@ -211,9 +212,8 @@ export default {
       }
     }
     .tip {
-      width: 190px;
       line-height: 30px;
-      background: #f6f2ea;
+      background: #f6f2ea5e;
       font-size: 12px;
       font-weight: 400;
       color: #a8700d;

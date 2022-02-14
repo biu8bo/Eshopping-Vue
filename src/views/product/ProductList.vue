@@ -1,30 +1,32 @@
 <template>
   <div>
     <!-- 搜索 -->
-    <div>
-      <van-search
-        shape="round"
-        v-model="keyword"
-        show-action
-        placeholder="请输入搜索关键词"
-        @search="onSearch"
-      >
-        <template #left>
-          <div style="color: gray; width: 38px; font-size: 25px">
-            <van-icon @click="$backPage" name="arrow-left" />
-          </div>
-        </template>
-        <template #action>
-          <van-button
-            @click="onSearch(keyword)"
-            color="linear-gradient(to right, #ff6034, #ee0a24)"
-            round
-            size="small"
-            >搜索</van-button
-          >
-        </template>
-      </van-search>
-    </div>
+    <van-sticky :offset-top="0">
+      <div>
+        <van-search
+          shape="round"
+          v-model="keyword"
+          show-action
+          placeholder="请输入搜索关键词"
+          @search="onSearch"
+        >
+          <template #left>
+            <div style="color: gray; width: 38px; font-size: 25px">
+              <van-icon @click="$backPage" name="arrow-left" />
+            </div>
+          </template>
+          <template #action>
+            <van-button
+              @click="onSearch(keyword)"
+              color="linear-gradient(to right, #ff6034, #ee0a24)"
+              round
+              size="small"
+              >搜索</van-button
+            >
+          </template>
+        </van-search>
+      </div>
+    </van-sticky>
     <van-tabs @click="changeSearch" title-active-color="red" line-height="0">
       <van-tab name="0">
         <template #title> 默认 </template>
@@ -79,11 +81,11 @@
         <template #title> 新品 </template>
       </van-tab>
     </van-tabs>
-    <div style="padding: 5px 10px">
-      <van-row gutter="10">
+    <div style="padding: 5px 8px">
+      <van-row gutter="8">
         <van-col
           @click="$router.push('/productDetails?id=' + item.id)"
-          style="margin-bottom: 5px"
+          style="margin-bottom: 3px"
           v-for="(item, index) in productData"
           :key="index"
           span="12"
@@ -104,18 +106,28 @@
             <div>
               <font
                 color="#f10404"
-                style="margin-left: 5px; font-size: 20px; font-weight: 550"
+                style="margin-left: 5px; font-size: 20px; font-weight: 500"
               >
                 <font size="3">￥</font>{{ item.price.toFixed(2) }}</font
               >
             </div>
             <div class="price">
-              <font style="margin-top:2px;margin-left: 5px;font-size: 14px; font-weight: 550">
-                <s>¥{{ item.ot_price.toFixed(2) }}</s></font
-              >
-              <font style="float: right; margin-right: 10px; color: gray"
-                >累计售出{{ item.sales }}件</font
-              >
+              <div style="margin-top: 5px">
+                <font
+                  style="
+                    margin-top: 2px;
+                    margin-left: 5px;
+                    font-size: 14px;
+                    font-weight: 550;
+                    color: gray;
+                  "
+                >
+                  <s>¥{{ item.ot_price.toFixed(2) }}</s></font
+                >
+                <font style="float: right; margin-right: 10px; color: gray"
+                  >累计售出{{ item.sales }}件</font
+                >
+              </div>
             </div>
           </div></van-col
         >
@@ -146,6 +158,7 @@
         type="spinner"
       />
     </div>
+
   </div>
 </template>
 
@@ -165,6 +178,7 @@ export default {
       limit: 10,
       hasNext: false,
       loading: false,
+     
     };
   },
   created() {

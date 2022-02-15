@@ -53,9 +53,11 @@
                 :key="index"
                 :to="'/productDetails?id=' + item.id"
               >
-                <van-image :src="imgUrls + item.image" height="126" />
                 <div>
-                  <font size="3">￥{{ item.price.toFixed(2) }}</font>
+                  <van-image :src="imgUrls + item.image" />
+                  <div>
+                    <font size="3">￥{{ item.price.toFixed(2) }}</font>
+                  </div>
                 </div>
               </van-grid-item>
             </van-grid>
@@ -63,13 +65,19 @@
         </div>
         <div
           class="shadow-box"
-          style="width: 100%; background-color: #ffffff; margin-top: 8px"
+          style="
+            width: 100%;
+            background-color: #ffffff;
+            margin-top: 8px;
+            padding-bottom: 5px;
+          "
         >
           <div style="height: 28px; line-height: 35px; padding: 5px">
             <font size="3" style="margin-left: 5px">热门臻选</font>
-            <font size="2" class="float-left"
-              >更多商品<van-icon name="arrow"
-            /></font>
+            <span class="float-left" @click="$router.push({name:'ProductList'})">
+              <font size="2" 
+                >更多商品<van-icon name="arrow" /></font
+            ></span>
           </div>
           <div style="margin-top: 10px">
             <van-card
@@ -114,9 +122,8 @@
             v-for="(item, index) in guesslikes"
             :key="index"
             span="12"
-           
           >
-            <div  class="good-card shadow-box">
+            <div class="good-card shadow-box">
               <div>
                 <van-image
                   width="100%"
@@ -133,12 +140,16 @@
                 </div>
               </div>
               <div class="price">
-                <font color="#f10404" style="margin-left:5px;font-size: 16px">
+              <div style="    height: 25px;
+    line-height: 25px;
+}">
+                  <font color="#f10404" style="margin-left: 5px; font-size: 16px">
                   <font size="2">￥</font>{{ item.price.toFixed(2) }}</font
                 >
                 <font style="float: right; margin-right: 10px; color: gray"
                   >仅剩：{{ item.stock }}件</font
                 >
+              </div>
               </div>
             </div></van-col
           >
@@ -200,13 +211,13 @@ export default {
       padding-top: 5px;
       margin: 0px 5px;
       font-size: 12px;
-      height: 40px;
+      height: 36px;
     }
     .title {
       font-size: 14px;
       font-weight: 400;
       padding: 0 11px;
-      min-height: 50px;
+      min-height: 45px;
       > div {
         margin: 10px 0;
       }

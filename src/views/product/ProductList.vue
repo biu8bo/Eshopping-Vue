@@ -85,7 +85,7 @@
       <van-row gutter="8">
         <van-col
           @click="$router.push('/productDetails?id=' + item.id)"
-          style="margin-bottom: 3px"
+          style="margin-bottom: 6px"
           v-for="(item, index) in productData"
           :key="index"
           span="12"
@@ -118,7 +118,6 @@
                     margin-top: 2px;
                     margin-left: 5px;
                     font-size: 14px;
-                    font-weight: 550;
                     color: gray;
                   "
                 >

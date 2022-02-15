@@ -19,7 +19,8 @@ Vue.prototype.$toast=Toast
 import '@/assets/css/index.scss'
 // 移动端适配
 import 'lib-flexible/flexible.js'
-
+//百度地图API
+import BMap from 'BMap';
 import md5 from 'js-md5';
 Vue.prototype.$md5 = md5;
 // filters

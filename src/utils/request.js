@@ -8,9 +8,10 @@ import router from '@/router'
 // 根据环境不同引入不同api地址
 import Cookies from 'js-cookie'
 
-
+const defaultSettings = require('/src/config/index.js')
 // create an axios instance
 const service = axios.create({
+    baseURL:defaultSettings.baseApi,
     withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000 // request timeout
 })

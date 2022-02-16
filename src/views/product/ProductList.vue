@@ -157,7 +157,6 @@
         type="spinner"
       />
     </div>
-
   </div>
 </template>
 
@@ -177,11 +176,12 @@ export default {
       limit: 10,
       hasNext: false,
       loading: false,
-     
+      cid: null,
     };
   },
   created() {
     this.keyword = this.$route.query.keyword ?? "";
+    this.cid = this.$route.query.cid;
   },
   mounted() {
     this.Search();
@@ -247,6 +247,7 @@ export default {
         salesOrder: this.salesOrder,
         page: this.page,
         limit: this.limit,
+        cid: this.cid,
       }).then((resp) => {
         this.productData.push(...resp.Data.Data);
         this.hasNext = resp.Data.HasNext;

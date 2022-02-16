@@ -43,7 +43,7 @@
 					{
 						title: '分类',
 						to: {
-							name: 'ProductClassify'
+							name: 'category'
 						},
 						icon: 'apps-o'
 					},

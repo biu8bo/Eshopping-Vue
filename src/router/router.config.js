@@ -87,6 +87,16 @@ export const constantRouterMap = [{
 				tabBar:true,
 				navBar:false
 			}
+		},{
+			path: '/category',
+			name: 'category',
+			component: () => import('@/views/category/category'),
+			meta: {
+				title: '商品分类',
+				keepAlive: false,
+				tabBar:true,
+				navBar:true
+			}
 		},
 	]
 }]

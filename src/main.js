@@ -14,7 +14,8 @@ import {
 	Toast
 } from 'vant';
 Vue.prototype.$toast=Toast
-
+import { ImagePreview } from 'vant';
+Vue.use(ImagePreview);
 // 引入全局样式
 import '@/assets/css/index.scss'
 // 移动端适配

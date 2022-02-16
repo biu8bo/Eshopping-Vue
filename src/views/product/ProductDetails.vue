@@ -21,11 +21,9 @@
       <!-- 商品详情信息 -->
       <div class="detail-card shadow-box">
         <div class="price">
-          <div
-            style="float: right; color: gray; font-size: 13px;"
-          >
+          <div style="float: right; color: gray; font-size: 12px">
             <span>销量{{ productData.sales }}</span>
-            <span style="margin-left: 10px"
+            <span style="margin-left: 12px"
               >浏览量{{ productData.browse }}</span
             >
           </div>
@@ -34,8 +32,8 @@
             <span style="font-size: 26px">{{
               Number(productData.price).toFixed(2)
             }}</span>
-            <span style="font-size: 15px;"> 起 </span>
-            <span style="font-size: 16px; color: gray"
+            <span style="font-size: 14px"> 起 </span>
+            <span style="font-size: 14px; color: gray"
               ><s>¥{{ Number(productData.ot_price).toFixed(2) }}</s></span
             >
           </div>
@@ -43,26 +41,29 @@
         <p class="title">{{ productData.store_name }}</p>
         <p class="title2">{{ productData.store_info }}</p>
       </div>
-      <div>
+      <div style="margin-top: 8px">
         <van-cell-group class="shadow-box">
           <van-cell
-            style="
-              margin-top: 8px;
-              border-top-right-radius: 8px;
-              border-top-left-radius: 8px;
-            "
+            class="radius-top"
             @click="show = true"
             title="选择规格"
             is-link
             :value="selectSku"
           />
+          <van-cell>
+            <template #title>
+              <div>
+                <span>保障</span>
+                <span style="margin-left: 12px"
+                  >假一赔四 · 退货运费险 · 上门取退</span
+                >
+              </div>
+            </template>
+          </van-cell>
           <van-cell
-            style="
-              border-bottom-right-radius: 8px;
-              border-bottom-left-radius: 8px;
-            "
+            class="radius-bottom"
             @click="showAddress = true"
-            label="24点前付款，预计送达"
+            :label="'24点前付款，预计' + sendTime + '送达'"
             is-link
           >
             <template #title>
@@ -79,6 +80,26 @@
           </van-cell>
         </van-cell-group>
       </div>
+      <!-- 评论区展示 -->
+      <div style="margin-top: 8px">
+        <van-cell-group class="shadow-box">
+          <van-cell class="radius-top">
+            <template #title>
+              <span style="font-weight: 500"
+                >宝贝评价({{ commentData.Total }})</span
+              >
+            </template>
+            <template>
+              <span style="color: #ff652c"
+                >查看全部<van-icon name="arrow"
+              /></span>
+            </template>
+          </van-cell>
+          <UserComment :commentData="commentData.Data[0]" class="radius-bottom"/>
+        </van-cell-group>
+      </div>
+      <!-- 图文描述 -->
+      <div v-html="productData.description"></div>
     </div>
     <div>
       <div>
@@ -110,7 +131,7 @@
       </van-action-sheet>
     </div>
     <van-submit-bar
-      :price="3050"
+      :price="selectSkuPrice"
       button-text="立即购买"
       @submit="show = true"
     />
@@ -118,7 +139,9 @@
 </template>
 
 <script>
-import { getProductInfo,getProductReply } from "@/api/product.js";
+import UserComment from '@/components/UserComment.vue'
+import { getProductInfo, getProductReply } from "@/api/product.js";
+import { parseTime } from "@/utils";
 export default {
   data() {
     return {
@@ -131,6 +154,9 @@ export default {
       locationInfo: "正在获取位置...",
       stockTips: "",
       showAddress: false,
+      selectSkuPrice: 0,
+      commentData: [],
+      sendTime: "",
       sku: {
         tree: [],
         list: [],
@@ -146,10 +172,15 @@ export default {
       },
     };
   },
+  components:{UserComment},
   created() {
     this.getProductInfo();
     this.getLocationInfo();
-    this.getProductReply()
+    this.getProductReply();
+    this.sendTime = parseTime(
+      new Date().getTime() + 86400000 * 3,
+      "{y}-{m}-{d}"
+    );
   },
   methods: {
     //获取位置信息
@@ -179,15 +210,19 @@ export default {
       this.current = index;
     },
     //获取评论区数据
-    getProductReply(){
+    getProductReply() {
       getProductReply({
-        pid:this.pid,
-        page:1,
-        limit:10
-      }).then(resp=>{console.log(resp);})
+        pid: this.pid,
+        page: 1,
+        limit: 10,
+      }).then((resp) => {
+        this.commentData = resp.Data;
+      });
     },
     //监听规格变化
-    onSkuSelected(skuValue, selectedSku, selectedSkuComb) {
+    onSkuSelected(skuValue) {
+      this.selectSkuPrice =
+        skuValue.selectedSkuComb == null ? 0 : skuValue.selectedSkuComb.price;
       let str = "";
       let selecteds = Object.keys(skuValue.selectedSku);
       selecteds.forEach((e, index) => {
@@ -288,7 +323,6 @@ export default {
     margin: 5px 0px;
   }
   .price {
-    font-weight: 500;
     color: #eb3729;
     height: 35px;
     line-height: 35px;

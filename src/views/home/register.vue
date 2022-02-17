@@ -1,11 +1,8 @@
 <template>
 	<div class="container">
-		<div class="left-bottom-sign"></div>
-		<div class="back-btn yticon icon-zuojiantou-up"></div>
-		<div class="right-top-sign"></div>
-		<!-- 设置白色背景防止软键盘把下部绝对定位元素顶上来盖住输入框等 -->
-		<div class="wrapper">
-			<div class="left-top-sign">REGISTER</div>
+		
+		<div class="wrapper shadow-box">
+
 			<div class="welcome"> 注册 </div>
 			<div class="input-content">
 				<van-form @submit="onSubmit">
@@ -29,7 +26,7 @@
 		</div>
 		<div class="register-section">
 			已有账号?
-			<span @click="go('/login')">点击登录</span>
+			<span style="color:#3535ff" @click="go('/login')">点击登录</span>
 		</div>
 	</div>
 
@@ -90,9 +87,9 @@
 
 	.container {
 		width: 100%;
-		padding-top: 50px;
+		padding-top: 115px;
 		position: absolute;
-		height: 92.5%;
+		height: 82.5%;
 		overflow: hidden;
 		background: #fff;
 	}

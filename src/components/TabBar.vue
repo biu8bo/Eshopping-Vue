@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-tabbar fixed route v-model="active" @change="handleChange">
+    <van-tabbar active-color="#ee0a24" inactive-color="#000" fixed route v-model="active" @change="handleChange">
       <van-tabbar-item v-for="(item, index) in data" :to="item.to" :icon="item.icon" :key="index">
         {{ item.title }}
       </van-tabbar-item>

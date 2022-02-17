@@ -95,7 +95,10 @@
               /></span>
             </template>
           </van-cell>
-          <UserComment :commentData="commentData.Data[0]" class="radius-bottom"/>
+          <UserComment
+            :commentData="commentData.Data[0]"
+            class="radius-bottom"
+          />
         </van-cell-group>
       </div>
       <!-- 图文描述 -->
@@ -130,16 +133,49 @@
         </div>
       </van-action-sheet>
     </div>
-    <van-submit-bar
-      :price="selectSkuPrice"
-      button-text="立即购买"
-      @submit="show = true"
-    />
+
+    <van-goods-action>
+      <van-goods-action-icon
+        @click="$router.push({ name: 'Home' })"
+        icon="wap-home-o"
+        text="首页"
+        color="#ee0a24"
+      />
+      <van-goods-action-icon
+        icon="like-o"
+        @click="addCollect"
+        v-if="!isCollect"
+        text="收藏"
+      />
+      <van-goods-action-icon
+        icon="like"
+        @click="addCollect"
+        v-if="isCollect"
+        text="已收藏"
+        color="#ff5000"
+      />
+      <van-goods-action-icon
+        icon="shopping-cart-o"
+        text="购物车"
+        color="#ff5000"
+      />
+      <van-goods-action-button
+        type="warning"
+        @click="show = true"
+        text="加入购物车"
+      />
+      <van-goods-action-button
+        type="danger"
+        @click="show = true"
+        text="立即购买"
+      />
+    </van-goods-action>
   </div>
 </template>
 
 <script>
-import UserComment from '@/components/UserComment.vue'
+import UserComment from "@/components/UserComment.vue";
+import { addCollect, delCollect } from "@/api/collect.js";
 import { getProductInfo, getProductReply } from "@/api/product.js";
 import { parseTime } from "@/utils";
 export default {
@@ -156,6 +192,7 @@ export default {
       showAddress: false,
       selectSkuPrice: 0,
       commentData: [],
+      isCollect: false,
       sendTime: "",
       sku: {
         tree: [],
@@ -172,7 +209,7 @@ export default {
       },
     };
   },
-  components:{UserComment},
+  components: { UserComment },
   created() {
     this.getProductInfo();
     this.getLocationInfo();
@@ -183,6 +220,16 @@ export default {
     );
   },
   methods: {
+    //添加收藏
+    addCollect() {
+      addCollect({
+        pid: this.pid,
+        type: "collect",
+      }).then(e=>{
+        this.isCollect=!this.isCollect
+      });
+    },
+
     //获取位置信息
     async getLocationInfo() {
       //获取当前位置
@@ -245,6 +292,7 @@ export default {
     getProductInfo() {
       getProductInfo(this.pid).then((e) => {
         this.productData = e.Data;
+        this.isCollect = this.productData.isCollect;
         this.sliderImg = e.Data.slider_image.split(",");
         this.goods.picture = this.$baseUrl + this.sliderImg[0];
         this.sku.stock_num = this.productData.stock;

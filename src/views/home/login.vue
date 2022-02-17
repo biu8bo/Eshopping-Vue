@@ -1,11 +1,8 @@
 <template>
   <div class="container">
-    <div class="left-bottom-sign"></div>
-    <div class="back-btn yticon icon-zuojiantou-up"></div>
-    <div class="right-top-sign"></div>
-    <!-- 设置白色背景防止软键盘把下部绝对定位元素顶上来盖住输入框等 -->
-    <div class="wrapper">
-      <div class="left-top-sign">意象商城</div>
+   
+    <div class="wrapper shadow-box">
+    
       <div class="welcome">登录</div>
       <div class="input-content">
         <van-form @submit="onSubmit">
@@ -34,7 +31,7 @@
     </div>
     <div class="register-section">
       还没有账号?
-      <span @click="go('/register')">马上注册</span>
+      <span style="color:#3535ff" @click="go('/register')">马上注册</span>
     </div>
   </div>
 </template>

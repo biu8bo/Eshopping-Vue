@@ -73,7 +73,7 @@ export const constantRouterMap = [{
 			meta: {
 				title: '商品详情',
 				keepAlive: false,
-				tabBar:true,
+				tabBar:false,
 				navBar:true
 			}
 		},
@@ -95,7 +95,39 @@ export const constantRouterMap = [{
 				title: '商品分类',
 				keepAlive: false,
 				tabBar:true,
-				navBar:true
+				navBar:false
+			}
+		},{
+			path: '/user',
+			name: 'User',
+			component: () => import('@/views/user/User'),
+			meta: {
+				title: '个人中心',
+				keepAlive: false,
+				tabBar:true,
+				navBar:false,
+				requireAuth:true 
+			}
+		},{
+			path: '/cart',
+			name: 'Cart',
+			component: () => import('@/views/cart/Cart'),
+			meta: {
+				title: '购物车',
+				keepAlive: false,
+				tabBar:true,
+				navBar:false,
+				requireAuth:true 
+			}
+		},{
+			path: '/loginTips',
+			name: 'LoginTips',
+			component: () => import('@/views/home/loginTips'),
+			meta: {
+				title: '请登录',
+				keepAlive: false,
+				tabBar:true,
+				navBar:false
 			}
 		},
 	]

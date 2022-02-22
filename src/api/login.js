@@ -10,6 +10,7 @@ export function login(data) {
 	})
 }
 
+
 // 用户信息 post 方法
 export function getUserInfo() {
 	return request({
@@ -37,11 +38,11 @@ export function forget(data) {
 	})
 }
 //获取验证码
-export function registerCode(data) {
+export function registerCode(params) {
 	return request({
-		url: '/register/verify',
-		method: 'post',
-		data
+		url: '/register/vertify',
+		method: 'get',
+		params
 	})
 }
 //注册 

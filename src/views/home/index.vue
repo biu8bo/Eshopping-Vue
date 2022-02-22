@@ -17,6 +17,11 @@
           <img v-lazy="imgUrls + image.pic" />
         </van-swipe-item>
       </van-swipe>
+      <van-notice-bar
+      style="height:35px"
+        left-icon="volume-o"
+        text="在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。"
+      />
       <!-- 菜单 -->
       <div style="background-color: #ffffff; margin-top: 5px">
         <div style="margin-top: 5px">

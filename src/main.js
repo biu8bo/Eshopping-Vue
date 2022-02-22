@@ -14,8 +14,13 @@ import {
 	Toast
 } from 'vant';
 Vue.prototype.$toast=Toast
+
+//大图展示
 import { ImagePreview } from 'vant';
 Vue.use(ImagePreview);
+//通知
+import { NoticeBar } from 'vant';
+Vue.use(NoticeBar);
 // 引入全局样式
 import '@/assets/css/index.scss'
 // 移动端适配

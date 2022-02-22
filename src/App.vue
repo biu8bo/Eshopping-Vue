@@ -11,18 +11,18 @@ export default {
 <style lang="scss">
 .shadow-box {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 5px;
   background: white;
 }
 
  .radius-top {
-  border-top-right-radius: 8px;
-  border-top-left-radius: 8px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .radius-bottom {
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 .warpper {
   padding: 0 8px;

@@ -13,7 +13,6 @@ const defaultSettings = require('/src/config/index.js')
 const service = axios.create({
     baseURL:defaultSettings.baseApi,
     withCredentials: true, // send cookies when cross-domain requests
-    timeout: 5000 // request timeout
 })
 
 // request拦截器 request interceptor

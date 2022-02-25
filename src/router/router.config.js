@@ -109,6 +109,26 @@ export const constantRouterMap = [{
 				requireAuth:true 
 			}
 		},{
+			path: '/user/foot',
+			name: 'Foot',
+			component: () => import('@/views/collect/collect'),
+			meta: {
+				title: '我的足迹',
+				keepAlive: false,
+				tabBar:false,
+				navBar:false
+			}
+		},{
+			path: '/user/collect',
+			name: 'Collect',
+			component: () => import('@/views/collect/collect'),
+			meta: {
+				title: '我的收藏',
+				keepAlive: false,
+				tabBar:false,
+				navBar:false
+			}
+		},{
 			path: '/cart',
 			name: 'Cart',
 			component: () => import('@/views/cart/Cart'),

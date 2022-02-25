@@ -38,6 +38,7 @@
             >
           </div>
         </div>
+        
         <p class="title">{{ productData.store_name }}</p>
         <p class="title2">{{ productData.store_info }}</p>
       </div>

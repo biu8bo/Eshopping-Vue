@@ -15,7 +15,7 @@ export default {
   background: white;
 }
 
- .radius-top {
+.radius-top {
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 }
@@ -27,7 +27,10 @@ export default {
 .warpper {
   padding: 0 8px;
 }
-html {
+html,
+body {
+  height: 100%;
   background-color: #ffffff;
+  font-family: -apple-system, Helvetica, sans-serif;
 }
 </style>

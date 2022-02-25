@@ -60,13 +60,30 @@
         </div>
       </div>
 
-      <van-cell-group class="shadow-box bottom" style="margin-top:8px">
-        <van-cell :icon="zj" class="radius-top" title="我的足迹" is-link></van-cell>
+      <van-cell-group class="shadow-box bottom" style="margin-top: 8px">
+        <van-cell
+          :to="{ name: 'Foot' }"
+          :icon="zj"
+          class="radius-top"
+          title="我的足迹"
+          is-link
+        ></van-cell>
+        <van-cell
+          :to="{ name: 'Collect' }"
+          :icon="sc"
+          title="我的收藏"
+          is-link
+        ></van-cell>
         <van-cell :icon="yhq" title="优惠券" is-link></van-cell>
-        <van-cell :icon="sc" title="收藏商品" is-link></van-cell>
+
         <van-cell :icon="dz" title="地址管理" is-link></van-cell>
-        <van-cell  :icon="ye" title="我的余额" is-link></van-cell>
-        <van-cell :icon="sc" class="radius-bottom" title="砍价记录" is-link></van-cell>
+        <van-cell :icon="ye" title="我的余额" is-link></van-cell>
+        <van-cell
+          :icon="sc"
+          class="radius-bottom"
+          title="砍价记录"
+          is-link
+        ></van-cell>
       </van-cell-group>
     </div>
   </div>
@@ -106,7 +123,8 @@ export default {
       zj,
       yhq,
       sc,
-      dz,ye
+      dz,
+      ye,
     };
   },
   created() {
@@ -170,14 +188,13 @@ export default {
     }
   }
 
-  .bottom{
-    .van-icon{
-      .van-icon__image{
+  .bottom {
+    .van-icon {
+      .van-icon__image {
         width: 19px;
         height: 19px;
         margin-top: 2px;
       }
-
     }
   }
 }

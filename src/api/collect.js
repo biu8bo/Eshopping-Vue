@@ -14,9 +14,25 @@ export function delCollect(data) {
         data
 	})
 }
+export function getCollect(data) {
+	return request({
+		url: '/getCollect',
+		method: 'Post',
+        data
+	})
+}
 
+export function delCollectBatch(data) {
+	return request({
+		url: '/delCollectBatch',
+		method: 'Post',
+        data
+	})
+}
 
 export default {
 	addCollect,
-    delCollect
+    delCollect,
+	getCollect,
+	delCollectBatch
 }

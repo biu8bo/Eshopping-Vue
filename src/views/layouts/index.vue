@@ -2,9 +2,9 @@
 	<div class="app-container">
 
 		<van-sticky :offset-top="0">
-			<van-nav-bar left-arrow v-if="$route.meta.navBar" @click-left="onClickLeft" @click-right="onClickRight">
+			<van-nav-bar   left-arrow v-if="$route.meta.navBar" @click-left="onClickLeft" @click-right="onClickRight">
 				<template #right>
-					<van-icon name="search" size="18" @click="go" />
+					<van-icon  name="search" size="18" @click="go" />
 				</template>
 				<template #title>
 					{{$route.meta.title}}
@@ -69,6 +69,7 @@
 		components: {
 			TabBar
 		},
+
 		methods: {
 			go() {
 				this.$router.push("/search")
@@ -84,6 +85,8 @@
 	}
 </script>
 <style lang="scss">
-
+.van-sticky{
+z-index: 99999;
+}
 
 </style>

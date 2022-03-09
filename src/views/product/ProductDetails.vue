@@ -38,7 +38,7 @@
             >
           </div>
         </div>
-        
+
         <p class="title">{{ productData.store_name }}</p>
         <p class="title2">{{ productData.store_info }}</p>
       </div>
@@ -96,8 +96,12 @@
               /></span>
             </template>
           </van-cell>
+          <van-cell v-if="commentShowData.length == 0">
+            <div>暂无宝贝评论~</div>
+          </van-cell>
           <UserComment
-            :commentData="commentData.Data[0]"
+            v-if="commentShowData.length"
+            :commentData="commentShowData[0]"
             class="radius-bottom"
           />
         </van-cell-group>
@@ -178,6 +182,7 @@
 import UserComment from "@/components/UserComment.vue";
 import { addCollect, delCollect } from "@/api/collect.js";
 import { getProductInfo, getProductReply } from "@/api/product.js";
+import {addCart} from  "@/api/cart.js"
 import { parseTime } from "@/utils";
 export default {
   data() {
@@ -193,6 +198,7 @@ export default {
       showAddress: false,
       selectSkuPrice: 0,
       commentData: [],
+      commentShowData:[],
       isCollect: false,
       sendTime: "",
       sku: {
@@ -230,7 +236,6 @@ export default {
         this.isCollect=!this.isCollect
       });
     },
-
     //获取位置信息
     async getLocationInfo() {
       //获取当前位置
@@ -253,7 +258,16 @@ export default {
     onBuyClicked(skuData) {
       console.log(skuData);
     },
-    onAddCartClicked(skuData) {},
+    onAddCartClicked(skuData) {
+      addCart({
+unique:skuData.selectedSkuComb.unique,
+productId:skuData.goodsId,
+num:skuData.selectedNum
+      }).then(e=>{
+        this.$toast.success("加入成功！")
+        this.show=false
+      })
+    },
     onChange(index) {
       this.current = index;
     },
@@ -265,6 +279,7 @@ export default {
         limit: 10,
       }).then((resp) => {
         this.commentData = resp.Data;
+        this.commentShowData= this.commentData.Data
       });
     },
     //监听规格变化

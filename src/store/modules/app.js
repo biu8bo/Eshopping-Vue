@@ -18,14 +18,14 @@ const mutations = {
 	},
 	SAVE_User(state, user) {
 		state.user = user
-		sessionStorage.setItem("user", JSON.stringify(user))
+		localStorage.setItem("user", JSON.stringify(user))
 	},
 	logout(state) {
 		
 		state.token = null;
 		state.user = {};
 		Cookies.set("Token", "",-1)
-		sessionStorage.clear();
+		localStorage.clear();
 		loginOut().then(res=>{})
 	}
 }

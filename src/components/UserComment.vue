@@ -1,6 +1,7 @@
 <!-- 评论显示组件 -->
 <template>
-  <van-cell>
+ <div>
+    <van-cell>
     <template #title>
       <div>
         <van-row :gutter="6">
@@ -52,6 +53,7 @@
       </div>
     </template>
   </van-cell>
+ </div>
 </template>
 
 <script>
@@ -90,6 +92,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+
 .border-radius /deep/ img{
     border: 8px;
 }

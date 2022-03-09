@@ -149,6 +149,16 @@ export const constantRouterMap = [{
 				tabBar:true,
 				navBar:false
 			}
+		},{
+			path: '/user/order',
+			name: 'Order',
+			component: () => import('@/views/order/Order'),
+			meta: {
+				title: '我的订单',
+				keepAlive: false,
+				tabBar:false,
+				navBar:false
+			}
 		},
 	]
 }]

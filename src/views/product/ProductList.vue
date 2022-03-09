@@ -139,16 +139,15 @@
       description="暂无商品，去看点别的吧"
     />
     <div
-      @click="more"
       style="
         text-align: center;
         height: 30px;
         line-height: 30px;
         font-size: 15px;
       "
-      v-if="hasNext"
     >
-      <span>点击加载更多</span>
+      <span v-if="NoMore">{{ info }}</span>
+      <span v-if="hasNext">{{ info }}</span>
       <van-loading
         v-if="loading"
         color="#0094ff"
@@ -168,12 +167,14 @@ export default {
       active: 0,
       keyword: "",
       productData: [],
+      info: "正在加载更多...",
       isIntegral: false,
       priceOrder: null,
       isNew: null,
       salesOrder: null,
       page: 1,
       limit: 10,
+      NoMore: false,
       hasNext: false,
       loading: false,
       cid: null,
@@ -185,6 +186,23 @@ export default {
   },
   mounted() {
     this.Search();
+    let vm = this;
+    window.onscroll = function () {
+      //scrollTop是滚动条滚动时，距离顶部的距离
+      var scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      //windowHeight是可视区的高度
+      var windowHeight =
+        document.documentElement.clientHeight || document.body.clientHeight;
+      //scrollHeight是滚动条的总高度
+      var scrollHeight =
+        document.documentElement.scrollHeight || document.body.scrollHeight;
+      //滚动条到底部的条件
+      if (scrollTop + windowHeight >= scrollHeight) {
+        //到了这个就可以进行业务逻辑加载后台数据了
+        vm.more();
+      }
+    };
   },
 
   methods: {
@@ -251,6 +269,10 @@ export default {
       }).then((resp) => {
         this.productData.push(...resp.Data.Data);
         this.hasNext = resp.Data.HasNext;
+        if (!this.hasNext) {
+          this.info = "没有更多";
+          this.NoMore = true;
+        }
         this.loading = false;
       });
     },

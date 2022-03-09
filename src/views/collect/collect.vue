@@ -8,18 +8,22 @@
         <template #right>
           <div @click="delBatch">
             <van-icon
+              v-if="ListData.length != 0"
               @click="editIcon = !editIcon"
               v-show="editIcon"
               color="gray"
               size="20"
               name="edit"
-            ></van-icon>
+              ><span style="font-size: 16px">管理</span></van-icon
+            >
             <van-icon
+              v-if="ListData.length != 0"
               @click="editIcon = !editIcon"
               v-show="!editIcon"
               size="20"
               name="edit"
-            ></van-icon>
+              ><span style="font-size: 16px">管理</span></van-icon
+            >
           </div>
         </template>
       </van-nav-bar>
@@ -143,6 +147,7 @@ export default {
     },
   },
   created() {
+
     if (this.$route.meta.title == "我的足迹") {
       this.type = "foot";
     } else {
@@ -197,7 +202,7 @@ export default {
       }).then((resp) => {
         this.ListData.push(...resp.Data.Data);
         this.hashNext = resp.Data.HasNext;
-        this.loading = false
+        this.loading = false;
       });
     },
   },

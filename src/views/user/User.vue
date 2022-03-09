@@ -51,11 +51,11 @@
         </van-cell>
         <div class="order-type radius-bottom">
           <van-grid square :border="false" :column-num="5">
-            <van-grid-item class="rd" :icon="dfk" text="待付款" />
-            <van-grid-item :icon="dfh" text="待发货" />
-            <van-grid-item :icon="dsh" text="待收货" />
-            <van-grid-item :icon="dpj" text="待评价" />
-            <van-grid-item class="rd" :icon="sh" text="售后/退款" />
+            <van-grid-item @click="$router.push({name:'Order',query:{type:0}})" class="rd" :icon="dfk" text="待付款" />
+            <van-grid-item @click="$router.push({name:'Order',query:{type:1}})" :icon="dfh" text="待发货" />
+            <van-grid-item @click="$router.push({name:'Order',query:{type:2}})" :icon="dsh" text="待收货" />
+            <van-grid-item @click="$router.push({name:'Order',query:{type:3}})" :icon="dpj" text="待评价" />
+            <van-grid-item @click="$router.push({name:'Order',query:{type:4}})" class="rd" :icon="sh" text="已完成" />
           </van-grid>
         </div>
       </div>
@@ -128,7 +128,7 @@ export default {
     };
   },
   created() {
-    this.User = JSON.parse(sessionStorage.user);
+    this.User = JSON.parse(localStorage.user);
   },
 };
 </script>

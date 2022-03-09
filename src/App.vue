@@ -28,7 +28,8 @@ export default {
   padding: 0 8px;
 }
 html,
-body {
+body,
+#app {
   height: 100%;
   background-color: #ffffff;
   font-family: -apple-system, Helvetica, sans-serif;

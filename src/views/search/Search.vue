@@ -112,7 +112,7 @@ export default {
           this.historyData = this.historyData.filter((e) => e != key);
           this.historyData.unshift(key);
           //设置
-          localStorage.setItem(user.username, JSON.stringify(this.historyData));
+          localStorage.setItem("-1", JSON.stringify(this.historyData));
         }
       }
     },
@@ -120,7 +120,8 @@ export default {
     getUserSearchHistory() {
       let user = this.getUser();
       //登录了就拿用户名做键 获取搜索记录
-      if (user) {
+      if (user!=null) {
+        console.log(1111111);
         let result = JSON.parse(localStorage.getItem(user.username));
         //拿不到 设置空
         if (!result) {

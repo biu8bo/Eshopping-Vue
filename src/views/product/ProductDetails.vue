@@ -181,9 +181,10 @@
 
 <script>
 import UserComment from "@/components/UserComment.vue";
-import { addCollect, delCollect } from "@/api/collect.js";
+import { addCollect } from "@/api/collect.js";
 import { getProductInfo, getProductReply } from "@/api/product.js";
 import {addCart} from  "@/api/cart.js"
+import {confirm} from  "@/api/order.js"
 import { parseTime } from "@/utils";
 export default {
   data() {
@@ -257,7 +258,20 @@ export default {
       });
     },
     onBuyClicked(skuData) {
-      console.log(skuData);
+     addCart({
+unique:skuData.selectedSkuComb.unique,
+productId:skuData.goodsId,
+num:skuData.selectedNum
+      }).then(e=>{
+
+        confirm({
+          cartIds:[e.Data]
+        }).then(_=>{
+
+          console.log(_);
+        })
+        this.show=false
+      })
     },
     onAddCartClicked(skuData) {
       addCart({

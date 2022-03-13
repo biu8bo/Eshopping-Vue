@@ -1,7 +1,7 @@
 // axios
 import request from '@/utils/request'
 
-// 登录
+// 获取订单信息
 export function order(data) {
 	return request({
 		url: '/order',
@@ -9,6 +9,15 @@ export function order(data) {
 		data
 	})
 }
+
+export function confirm(data) {
+	return request({
+		url: '/confirm',
+		method: 'post',
+		data
+	})
+}
 export default {
 	order,
+	confirm
 }

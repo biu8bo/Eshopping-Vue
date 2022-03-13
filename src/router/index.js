@@ -30,7 +30,7 @@ const router = createRouter()
 router.beforeEach((to, from, next) => {
   if (to.matched.some(r => r.meta.requireAuth)) {          
     meta:{requireAuth:true}
-    if (Cookies.get('Token')) {
+    if (Cookies.get('Token')&&localStorage.getItem("user")) {
         next();
     } else {
         next({

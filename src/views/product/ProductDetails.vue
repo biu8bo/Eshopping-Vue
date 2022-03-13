@@ -162,6 +162,7 @@
       <van-goods-action-icon
         icon="shopping-cart-o"
         text="购物车"
+        @click="$router.push({name:'Cart'})"
         color="#ff5000"
       />
       <van-goods-action-button

@@ -1,43 +1,41 @@
 <template>
-	<div class="warpper">
+	<div>
 		<van-submit-bar :price="money*100" button-text="提交订单" @submit="onSubmit" tip="向左滑动商品可删除该商品！">
 			<van-checkbox v-model="value" @click="toggleAll(ckAll==false?true:false)">全选</van-checkbox>
 		</van-submit-bar>
 		<van-empty description="空空如也!" v-if="cartList.length<=0" />
 		<div class="cart">
 			<van-checkbox-group v-model="result" ref="checkboxGroup">
-				<van-swipe-cell v-for="item in cartList" :key="item.id"
-					v-if="item.productInfo.isIntegral!=1&&item.combinationId==0">
-					<van-card :num="item.cartNum" :desc="item.productInfo.storeInfo" :title="item.productInfo.storeName"
-						:thumb="imgUrls+item.productInfo.image">
+				<van-swipe-cell v-for="item in cartList" :key="item.cart.cart.id"
+					>
+					<van-card :num="item.cart.cart.cart_num" :desc="item.productData.store_info" :title="item.productData.store_name"
+						:thumb="item.productData.image">
 						<template #tags>
-							<van-tag plain type="danger" style="margin-top: 10px;">{{item.productInfo.attrInfo.sku}}
+							<van-tag plain type="danger" style="margin-top: 10px;">{{item.cart.sku}}
 							</van-tag>
 						</template>
 						<template #price>
-							<span v-if="!item.combinationId">
-								<font color="red" size="3"> ￥{{item.truePrice}}</font>
+							<span>
+								<font color="red" size="3"> ￥{{item.cart.truePrice}}</font>
 							</span>
 						</template>
 						<template #footer>
-							<van-stepper v-model="item.cartNum" integer @change="onChange" :value="changevalue"
-								@plus="itemId=item.id" @minus="itemId=item.id" @focus="itemId=item.id" />
+							<van-stepper v-model="item.cart.cart.cart_num" integer @change="onChange" :value="changevalue"
+								@plus="itemId=item.cart.cart.id" @minus="itemId=item.cart.cart.id" @focus="itemId=item.cart.cart.id" />
 						</template>
 						<template #tag>
-							<van-checkbox :name="item.id" @click="toggle(item.id,item.truePrice*item.cartNum)"
+							<van-checkbox :name="item.cart.cart.id" @click="toggle(item.cart.cart.id,item.cart.truePrice*item.cart.cart.cart_num)"
 								checked-color="#ee0a24"></van-checkbox>
 						</template>
 					</van-card>
 					<template #right>
-						<van-button square text="删除" type="danger" class="delete-button" @click="del(item.id)" />
+						<van-button square text="删除" type="danger" class="delete-button" @click="del(item.cart.cart.id)" />
 					</template>
 				</van-swipe-cell>
-
 			</van-checkbox-group>
 		</div>
 	</div>
 </template>
-
 <script>
 	import {
 		getCartList,
@@ -65,7 +63,7 @@
 			//获取购物车列表
 			getCart() {
 				getCartList().then(res => {
-					this.cartList = res.data.valid
+					this.cartList = res.Data
 				})
 			},
 			//获取点击的name 复选框
@@ -87,11 +85,16 @@
 			},
 			////修改购物车数量
 			onChange(value) {
+					console.log(value);
 				this.money = 0
 				this.cartList.forEach((item, index) => {
-					if (item.id == this.list[index]) {
-						this.money = this.money + item.truePrice * item.cartNum
+					console.log(item.cart.cart.id);
+					this.list.forEach((element,i) => {
+						if (item.cart.cart.id ==element) {
+						this.money = this.money + item.cart.truePrice * item.cart.cart.cart_num
 					}
+					});
+					
 				})
 
 				this.$toast.loading({
@@ -104,13 +107,13 @@
 					vm.changevalue = value;
 					if (vm.changevalue > 0 && vm.itemId != null) {
 						upCartNum({
-							number: vm.changevalue,
+							cart_num: vm.changevalue,
 							id: vm.itemId
-						}).then(res => {})
+						}).then(res => {
+							this.getCart();
+						})
 					}
 				}, 500);
-
-
 			},
 			//提交按钮
 			onSubmit() {
@@ -139,15 +142,11 @@
 			},
 			//删除
 			del(id) {
-				let list = []
-				list.push(id)
 				delCart({
-					ids: list
+					cid:id
 				}).then(res => {
-					if (res.status) {
 						this.getCart()
 						this.$toast.success('删除成功');
-					}
 				})
 			},
 			//全选
@@ -160,7 +159,7 @@
 				if (ckAll) {
 					//计算总金额
 					this.cartList.forEach(item => {
-						money = money + item.productInfo.attrInfo.price * item.cartNum
+						money = money + item.cart.truePrice * item.cart.cart.cart_num
 						this.list.push(item.id)
 					})
 					this.money = money

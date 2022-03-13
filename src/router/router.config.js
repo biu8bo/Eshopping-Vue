@@ -95,7 +95,7 @@ export const constantRouterMap = [{
 				title: '商品分类',
 				keepAlive: false,
 				tabBar:true,
-				navBar:false
+				navBar:true
 			}
 		},{
 			path: '/user',
@@ -135,9 +135,10 @@ export const constantRouterMap = [{
 			meta: {
 				title: '购物车',
 				keepAlive: false,
-				tabBar:true,
-				navBar:false,
-				requireAuth:true 
+				tabBar:false,
+				navBar:true,
+				requireAuth:true,
+				canSearch:false
 			}
 		},{
 			path: '/loginTips',
@@ -157,7 +158,32 @@ export const constantRouterMap = [{
 				title: '我的订单',
 				keepAlive: false,
 				tabBar:false,
-				navBar:false
+				navBar:false,
+				requireAuth:true 
+			}
+		},{
+			path: '/user/address',
+			name: 'Address',
+			component: () => import('@/views/contactList/contactList'),
+			meta: {
+				title: '我的联系人',
+				keepAlive: false,
+				tabBar:false,
+				navBar:true,
+				requireAuth:true,
+				canSearch:false
+			}
+		},{
+			path: '/newContact',
+			name: 'NewContact',
+			component: () => import('@/views/contactList/newContact'),
+			meta: {
+				title: '新增联系人',
+				keepAlive: false,
+				tabBar:false,
+				navBar:true,
+				requireAuth:true,
+				canSearch:false
 			}
 		},
 	]

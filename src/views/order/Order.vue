@@ -10,31 +10,31 @@
           <van-tab>
             <template #title>
               <div>待付款</div>
-              <div>0</div>
+              <!-- <div>0</div> -->
             </template>
           </van-tab>
           <van-tab>
             <template #title>
               <div>待发货</div>
-              <div>0</div>
+              <!-- <div>0</div> -->
             </template>
           </van-tab>
           <van-tab>
             <template #title>
               <div>待收货</div>
-              <div>0</div>
+              <!-- <div>0</div> -->
             </template>
           </van-tab>
           <van-tab>
             <template #title>
               <div>待评价</div>
-              <div>0</div>
+              <!-- <div>0</div> -->
             </template>
           </van-tab>
           <van-tab>
             <template #title>
               <div>已完成</div>
-              <div>0</div>
+              <!-- <div>0</div> -->
             </template>
           </van-tab>
         </van-tabs>
@@ -43,7 +43,7 @@
     <div class="body">
       <div class="card" v-for="(item, index) in OrderData" :key="index">
         <p><span>订单编号:{{ item.order_id }}</span>
-        <span class="time">{{item.create_time}}</span>
+        <span class="time">{{parseTime(item.create_time)}}</span>
         </p>
         <van-card
           v-for="(e, i) in item.store_order_cart_info"
@@ -75,6 +75,7 @@
 </template>
 <script>
 import { order } from "@/api/order.js";
+import {parseTime} from '@/utils'
 export default {
   data() {
     return {
@@ -84,6 +85,7 @@ export default {
       hasNext: true,
       page: 1,
       limit: 10,
+      parseTime
     };
   },
   created() {

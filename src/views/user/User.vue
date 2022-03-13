@@ -37,7 +37,12 @@
       </div>
 
       <div class="display-order shadow-box">
-        <van-cell class="radius-top" title="我的订单" value="全部订单">
+        <van-cell class="radius-top" title="我的订单">
+          <template>
+            <div @click="$router.push({name:'Order',query:{type:0}})">
+              全部订单
+            </div>
+          </template>
           <template #right-icon>
             <div style="color: #969799">
               <van-icon
@@ -76,7 +81,7 @@
         ></van-cell>
         <van-cell :icon="yhq" title="优惠券" is-link></van-cell>
 
-        <van-cell :icon="dz" title="地址管理" is-link></van-cell>
+        <van-cell :icon="dz" @click="$router.push({name:'Address'})" title="地址管理" is-link></van-cell>
         <van-cell :icon="ye" title="我的余额" is-link></van-cell>
         <van-cell
           :icon="sc"

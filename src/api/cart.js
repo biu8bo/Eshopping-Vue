@@ -9,6 +9,32 @@ export function addCart(data) {
 		data
 	})
 }
+
+export function getCartList() {
+	return request({
+		url: '/getCartList',
+		method: 'get',
+	})
+}
+
+export function upCartNum(data) {
+	return request({
+		url: '/updateNum',
+		method: 'post',
+		data
+	})
+}
+
+export function delCart(params) {
+	return request({
+		url: '/delCart',
+		method: 'post',
+		params
+	})
+}
 export default {
 	addCart,
+	getCartList,
+	delCart,
+	upCartNum
 }

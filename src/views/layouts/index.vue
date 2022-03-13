@@ -4,7 +4,7 @@
 		<van-sticky :offset-top="0">
 			<van-nav-bar   left-arrow v-if="$route.meta.navBar" @click-left="onClickLeft" @click-right="onClickRight">
 				<template #right>
-					<van-icon  name="search" size="18" @click="go" />
+					<van-icon v-if="$route.meta.canSearch||$route.meta.canSearch==undefined"  name="search" size="18" @click="go" />
 				</template>
 				<template #title>
 					{{$route.meta.title}}
@@ -33,6 +33,7 @@
 		name: 'AppLayout',
 		data() {
 			return {
+
 				tabbars: [{
 						title: '首页',
 						to: {
@@ -75,7 +76,7 @@
 				this.$router.push("/search")
 			},
 			onClickLeft() {
-				this.$router.go(-1);
+				this.$router.back()
 			},
 			onClickRight() {
 

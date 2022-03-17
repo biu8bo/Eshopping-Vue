@@ -162,7 +162,7 @@
       <van-goods-action-icon
         icon="shopping-cart-o"
         text="购物车"
-        @click="$router.push({name:'Cart'})"
+        @click="$router.push({ name: 'Cart' })"
         color="#ff5000"
       />
       <van-goods-action-button
@@ -183,8 +183,8 @@
 import UserComment from "@/components/UserComment.vue";
 import { addCollect } from "@/api/collect.js";
 import { getProductInfo, getProductReply } from "@/api/product.js";
-import {addCart} from  "@/api/cart.js"
-import {confirm} from  "@/api/order.js"
+import { addCart } from "@/api/cart.js";
+import { confirm } from "@/api/order.js";
 import { parseTime } from "@/utils";
 export default {
   data() {
@@ -200,7 +200,7 @@ export default {
       showAddress: false,
       selectSkuPrice: 0,
       commentData: [],
-      commentShowData:[],
+      commentShowData: [],
       isCollect: false,
       sendTime: "",
       sku: {
@@ -234,8 +234,8 @@ export default {
       addCollect({
         pid: this.pid,
         type: "collect",
-      }).then(e=>{
-        this.isCollect=!this.isCollect
+      }).then((e) => {
+        this.isCollect = !this.isCollect;
       });
     },
     //获取位置信息
@@ -258,30 +258,29 @@ export default {
       });
     },
     onBuyClicked(skuData) {
-     addCart({
-unique:skuData.selectedSkuComb.unique,
-productId:skuData.goodsId,
-num:skuData.selectedNum
-      }).then(e=>{
-
-        confirm({
-          cartIds:[e.Data]
-        }).then(_=>{
-
-          console.log(_);
-        })
-        this.show=false
-      })
+      addCart({
+        unique: skuData.selectedSkuComb.unique,
+        productId: skuData.goodsId,
+        num: skuData.selectedNum,
+      }).then((e) => {
+        this.$router.push({
+          name: "CreateOrder",
+          query: {
+            ids: e.Data,
+          },
+        });
+        this.show = false;
+      });
     },
     onAddCartClicked(skuData) {
       addCart({
-unique:skuData.selectedSkuComb.unique,
-productId:skuData.goodsId,
-num:skuData.selectedNum
-      }).then(e=>{
-        this.$toast.success("加入成功！")
-        this.show=false
-      })
+        unique: skuData.selectedSkuComb.unique,
+        productId: skuData.goodsId,
+        num: skuData.selectedNum,
+      }).then((e) => {
+        this.$toast.success("加入成功！");
+        this.show = false;
+      });
     },
     onChange(index) {
       this.current = index;
@@ -294,7 +293,7 @@ num:skuData.selectedNum
         limit: 10,
       }).then((resp) => {
         this.commentData = resp.Data;
-        this.commentShowData= this.commentData.Data
+        this.commentShowData = this.commentData.Data;
       });
     },
     //监听规格变化

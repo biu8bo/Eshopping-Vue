@@ -17,7 +17,24 @@ export function confirm(data) {
 		data
 	})
 }
+export function updateOrderAddress(data) {
+	return request({
+		url: '/updateOrderAddress',
+		method: 'post',
+		data
+	})
+}
+
+export function payOrder(data) {
+	return request({
+		url: '/payOrder',
+		method: 'post',
+		data
+	})
+}
 export default {
 	order,
-	confirm
+	confirm,
+	updateOrderAddress,
+	payOrder
 }

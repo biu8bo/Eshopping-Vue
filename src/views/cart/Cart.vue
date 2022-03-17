@@ -120,14 +120,14 @@
 				if (this.list.length > 0) {
 					if (this.list.length == 1) {
 						this.$router.push({
-							name: 'CreationOrder',
+							name: 'CreateOrder',
 							query: {
 								ids: this.list[0]
 							}
 						});
 					} else {
 						this.$router.push({
-							name: 'CreationOrder',
+							name: 'CreateOrder',
 							query: {
 								ids: JSON.stringify(this.list).replace('[', '').replace(']', '')
 							}

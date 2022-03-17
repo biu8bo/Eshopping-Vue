@@ -185,6 +185,18 @@ export const constantRouterMap = [{
 				requireAuth:true,
 				canSearch:false
 			}
+		},{
+			path: '/createOrder',
+			name: 'CreateOrder',
+			component: () => import('@/views/order/createOrder'),
+			meta: {
+				title: '创建订单',
+				keepAlive: false,
+				tabBar:false,
+				navBar:true,
+				requireAuth:true,
+				canSearch:false
+			}
 		},
 	]
 }]

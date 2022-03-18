@@ -82,7 +82,7 @@
         <van-cell :icon="yhq" title="优惠券" is-link></van-cell>
 
         <van-cell :icon="dz" @click="$router.push({name:'Address'})" title="地址管理" is-link></van-cell>
-        <van-cell :icon="ye" title="我的余额" is-link></van-cell>
+        <van-cell :icon="ye" :to="{name:'Recharge'}" title="我的余额" is-link></van-cell>
         <van-cell
           :icon="sc"
           class="radius-bottom"

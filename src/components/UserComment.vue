@@ -11,14 +11,16 @@
               width="40"
               height="40"
               fit="cover"
-              :src="$baseUrl+'/file/' + commentData.avatar"
+              :src="$baseUrl+'/file/' + commentData.commentInfo.avatar"
             ></van-image
           ></van-col>
           <van-col>
             <div style="font-weight: 500; font-size: 15px; height: 20px">
-              {{ commentData.nickname }}
+              {{ commentData.commentInfo.nickname }}
             </div>
-            <div style="color: gray; font-size: 13px">{{ showTime }}</div>
+            <div style="color: gray; font-size: 13px">{{ showTime }}  <span style="padding-left:10px"> 规格：</span><span v-if="commentData.productInfo==null">无</span> <span v-if="commentData.productInfo!=null">{{commentData.productInfo.cart_info.productInfo.attrInfo.sku}}</span></div>
+          </van-col>
+          <van-col>
           </van-col>
         </van-row>
       </div>
@@ -27,7 +29,7 @@
       <div>
         <!-- 评论内容 -->
         <div style="color: black; font-size: 15px">
-          {{ commentData.comment }}
+          {{ commentData.commentInfo.comment }}
         </div>
         <!-- 图片 -->
         <div style="margin-top: 10px">
@@ -69,10 +71,10 @@ export default {
   },
   created() {
     this.showTime = formatTime(
-      new Date(this.commentData.createTime),
+      new Date(this.commentData.commentInfo.createTime),
       "{y}-{m}-{d}"
     );
-    this.images = this.$options.filters.separate(this.commentData.pics)
+    this.images = this.$options.filters.separate(this.commentData.commentInfo.pics)
   },
   methods: {
     onChange(index) {

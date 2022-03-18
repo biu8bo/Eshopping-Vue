@@ -158,8 +158,9 @@ export const constantRouterMap = [{
 				title: '我的订单',
 				keepAlive: false,
 				tabBar:false,
-				navBar:false,
-				requireAuth:true 
+				navBar:true,
+				requireAuth:true,
+				canSearch:false
 			}
 		},{
 			path: '/user/address',
@@ -195,6 +196,42 @@ export const constantRouterMap = [{
 				tabBar:false,
 				navBar:true,
 				requireAuth:true,
+				canSearch:false
+			}
+		},{
+			path: '/paySuccess',
+			name: 'PaySuccess',
+			component: () => import('@/views/order/paySuccess'),
+			meta: {
+				title: '支付成功',
+				keepAlive: false,
+				tabBar:false,
+				navBar:false,
+				requireAuth:true,
+				canSearch:false
+			}
+		},{
+			path: '/recharge',
+			name: 'Recharge',
+			component: () => import('@/views/user/recharge'),
+			meta: {
+				title: '我的余额',
+				keepAlive: false,
+				tabBar:true,
+				navBar:true,
+				requireAuth:true,
+				canSearch:false
+			}
+		},{
+			path: '/comment',
+			name: 'Comment',
+			component: () => import('@/views/comment/comment'),
+			meta: {
+				title: '全部评论',
+				keepAlive: false,
+				tabBar:true,
+				navBar:true,
+				requireAuth:false,
 				canSearch:false
 			}
 		},

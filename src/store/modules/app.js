@@ -3,7 +3,8 @@ import {loginOut} from "@/api/login.js"
 const state = {
 	userName: '',
 	token: '',
-	user: ''
+	user: '',
+	commentData:{}
 }
 
 
@@ -21,7 +22,6 @@ const mutations = {
 		localStorage.setItem("user", JSON.stringify(user))
 	},
 	logout(state) {
-		
 		state.token = null;
 		state.user = {};
 		Cookies.set("Token", "",-1)

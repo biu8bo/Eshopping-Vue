@@ -92,6 +92,8 @@
             </template>
             <template>
               <span style="color: #ff652c"
+              @click="toAllComment()"
+              v-if="commentShowData.length != 0"
                 >查看全部<van-icon name="arrow"
               /></span>
             </template>
@@ -123,22 +125,6 @@
         />
       </div>
     </div>
-    <div>
-      <van-action-sheet v-model="showAddress" title="收货地址">
-        <div>
-          <div></div>
-          <div class="address-bottom">
-            <van-button
-              round
-              color="linear-gradient(to right, rgb(253 107 37), rgb(255 129 21))"
-            >
-              添加收货地址
-            </van-button>
-          </div>
-        </div>
-      </van-action-sheet>
-    </div>
-
     <van-goods-action>
       <van-goods-action-icon
         @click="$router.push({ name: 'Home' })"
@@ -182,9 +168,9 @@
 <script>
 import UserComment from "@/components/UserComment.vue";
 import { addCollect } from "@/api/collect.js";
-import { getProductInfo, getProductReply } from "@/api/product.js";
+import { getProductInfo } from "@/api/product.js";
 import { addCart } from "@/api/cart.js";
-import { confirm } from "@/api/order.js";
+import { getProductReply } from "@/api/replay.js";
 import { parseTime } from "@/utils";
 export default {
   data() {
@@ -229,6 +215,15 @@ export default {
     );
   },
   methods: {
+    toAllComment(){
+      this.$store.commentData =  this.commentData;
+      this.$router.push({
+        name:"Comment",
+        query:{
+          pid:this.pid
+        }
+      })
+    },
     //添加收藏
     addCollect() {
       addCollect({
@@ -292,6 +287,12 @@ export default {
         page: 1,
         limit: 10,
       }).then((resp) => {
+        resp.Data.Data.forEach(e=>{
+          if (e.productInfo!=null) {
+            e.productInfo.cart_info =JSON.parse(e.productInfo.cart_info)
+          }
+          
+        })
         this.commentData = resp.Data;
         this.commentShowData = this.commentData.Data;
       });

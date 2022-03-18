@@ -218,7 +218,14 @@ export default {
         orderKey:this.orderKey,
         mark:this.mark
       }).then(e=>{
-        console.log(e);
+      
+          this.$router.push({name:"PaySuccess",query:{state:1}})
+          this.$toast.success("支付成功!")
+
+      }).catch(e=>{
+
+        
+          this.$router.push({name:"PaySuccess",query:{state:0}})
       })
     },
     getOrderInfo() {

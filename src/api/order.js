@@ -32,9 +32,27 @@ export function payOrder(data) {
 		data
 	})
 }
+
+export function cancelOrder(data) {
+	return request({
+		url: '/cancelOrder',
+		method: 'post',
+		data
+	})
+}
+
+export function handlerPay(data) {
+	return request({
+		url: '/handlerPay',
+		method: 'post',
+		data
+	})
+}
 export default {
 	order,
 	confirm,
 	updateOrderAddress,
-	payOrder
+	payOrder,
+	cancelOrder,
+	handlerPay
 }

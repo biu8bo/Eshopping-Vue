@@ -24,15 +24,15 @@
       <div class="display-info shadow-box">
         <div>
           <div style="color: gray">我的余额</div>
-          <div class="num">0</div>
+          <div class="num">{{userMoneys.nowMoney.toFixed(2)}}</div>
         </div>
         <div>
-          <div style="color: gray">当前积分</div>
-          <div class="num">0</div>
+          <div style="color: gray">消费额</div>
+          <div class="num">{{userMoneys.orderStatusSum.toFixed(2)}}</div>
         </div>
         <div>
-          <div style="color: gray">优惠券</div>
-          <div class="num">0</div>
+          <div style="color: gray">充值额度</div>
+          <div class="num">{{userMoneys.recharge.toFixed(2)}}</div>
         </div>
       </div>
 
@@ -115,7 +115,7 @@ import sc from "@/views/user/img/sc.png";
 import dz from "@/views/user/img/dz.png";
 //余额
 import ye from "@/views/user/img/ye.png";
-
+import { getBalance } from "@/api/user.js";
 export default {
   data() {
     return {
@@ -130,11 +130,20 @@ export default {
       sc,
       dz,
       ye,
+      userMoneys:{}
     };
   },
   created() {
     this.User = JSON.parse(localStorage.user);
+    this.getBalance()
   },
+  methods:{
+    getBalance(){
+      getBalance().then(e=>{
+       this.userMoneys = e.Data
+      })
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

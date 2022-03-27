@@ -166,7 +166,7 @@
   </div>
 </template>
 <script>
-import { confirm, updateOrderAddress,payOrder } from "@/api/order.js";
+import { confirm, updateOrderAddress, payOrder } from "@/api/order.js";
 import { getAddress } from "@/api/address.js";
 
 import { parseTime } from "@/utils";
@@ -215,18 +215,18 @@ export default {
     //创建订单
     createOrder() {
       payOrder({
-        orderKey:this.orderKey,
-        mark:this.mark
-      }).then(e=>{
-      
-          this.$router.push({name:"PaySuccess",query:{state:1}})
-          this.$toast.success("支付成功!")
-
-      }).catch(e=>{
-
-        
-          this.$router.push({name:"PaySuccess",query:{state:0}})
+        orderKey: this.orderKey,
+        mark: this.mark,
       })
+        .then((e) => {
+          console.log(e);
+          if (e.Code == 200) {
+            this.$router.push({ name: "PaySuccess", query: { state: 1 } });
+            this.$toast.success("支付成功!");
+          } else if (e.Code == 400) {
+            this.$router.push({ name: "PaySuccess", query: { state: 0 } });
+          }
+        })
     },
     getOrderInfo() {
       confirm({

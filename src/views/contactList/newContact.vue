@@ -27,7 +27,7 @@
       position="bottom"
       :style="{ height: '40%' }"
     >
-      <van-area title="请选择" :area-list="areaList" @confirm="openPopup" />
+      <van-area title="请选择" @cancel="addressShow=false" :area-list="areaList"  @confirm="openPopup" />
     </van-popup>
     <van-field
       v-model="detail"

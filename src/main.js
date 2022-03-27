@@ -14,7 +14,8 @@ import {
 	Toast
 } from 'vant';
 Vue.prototype.$toast=Toast
-
+import { Overlay } from 'vant';
+Vue.use(Overlay);
 //大图展示
 import { ImagePreview } from 'vant';
 Vue.use(ImagePreview);

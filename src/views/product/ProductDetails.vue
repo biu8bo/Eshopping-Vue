@@ -22,7 +22,7 @@
       <div class="detail-card shadow-box">
         <div class="price">
           <div style="float: right; color: gray; font-size: 12px">
-            <span>销量{{ productData.sales }}</span>
+            <span>销量{{ productData.sales+productData.ficti }}</span>
             <span style="margin-left: 12px"
               >浏览量{{ productData.browse }}</span
             >

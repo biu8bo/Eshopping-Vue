@@ -65,7 +65,7 @@
             }}</van-tag>
           </template>
           <template #footer>
-            <div v-show="active == 0">
+            <div v-if="active == 0">
               <van-button @click="handlerPay(item.order_id)" size="mini"
                 >立即付款</van-button
               >
@@ -73,7 +73,7 @@
                 >取消付款</van-button
               >
             </div>
-            <div v-show="active == 3">
+            <div v-if="active == 3">
               <van-button @click="replay(item.order_id)" size="mini"
                 >立即评论</van-button
               >
@@ -87,6 +87,11 @@
       image-size="190px"
       :image="emptyImg"
     />
+    <van-overlay :show="isload">
+  <div class="wrapp" @click.stop>
+   <van-loading v-show="isload" type="spinner" color="#1989fa" />
+  </div>
+</van-overlay>
     <van-loading
       v-if="loading"
       color="#0094ff"
@@ -107,6 +112,7 @@ export default {
       emptyImg: require("./img/noOrder.png"),
       OrderData: [],
       hasNext: false,
+      isload:false,
       page: 1,
       loading: false,
       limit: 10,
@@ -138,8 +144,10 @@ export default {
   },
   watch: {
     active(n, o) {
-      this.getOrder();
+      console.log(n);
+      this.active = n;
       this.OrderData = [];
+      this.getOrder();
     },
   },
   methods: {
@@ -174,13 +182,17 @@ export default {
       });
     },
     getOrder() {
+      this.isload=true;
       order({
         orderType: this.active,
         Page: this.page,
         Limit: this.limit,
       }).then((e) => {
+        this.OrderData = [];
         this.hasNext = e.Data.HasNext;
         this.OrderData.push(...e.Data.Data);
+        this.isload=false;
+        this.$forceUpdate();
       });
     },
   },
@@ -188,6 +200,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 .warpper {
+   .wrapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .block {
+    width: 120px;
+    height: 120px;
+    background-color: #fff;
+  }
   height: 100%;
   padding: 0;
   .body {

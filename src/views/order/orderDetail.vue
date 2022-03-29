@@ -1,53 +1,52 @@
 <template>
-	<div class="warpper" v-if="order.statusDto">
+	<div class="warpper">
 		<div class="top-1">
 			<div class="top">
 				<div class="text">
-					<span>{{order.statusDto.msg}}</span>
+					<span>{{order.statusInfo}}</span>
 				</div>
 				<van-cell class="address">
 					<template #title>
-						<span class="custom-title">{{order.realName}}</span>
-						<span class="custom-title" style="margin-left: 8px;">{{order.userPhone}}</span>
+						<span class="custom-title">{{order.real_name}}</span>
+						<span class="custom-title" style="margin-left: 8px;">{{order.user_phone}}</span>
 					</template>
 					<template #label>
-						<span class="custom-title">{{order.userAddress}}</span>
+						<span class="custom-title">{{order.user_address}}</span>
 					</template>
 				</van-cell>
 			</div>
 		</div>
-		<van-cell title="订单状态" :value="order.statusDto.title" />
-		<template  v-for="(item,index) in order.cartInfo">
-			<van-card :key="index" :num="item.cartNum" :desc="item.productInfo.storeInfo" :title="item.productInfo.storeName"
-				:thumb="imgUrls+item.productInfo.image">
+		<van-cell title="订单状态" :value="order.statusInfo" />
+		<template  v-for="(item,index) in order.store_order_cart_info">
+			<van-card :key="index" :num="item.cart_num" :desc="item.store_product.store_info" :title="item.store_product.store_name"
+				:thumb="item.store_product.image">
 				<template #price>
 					<font size="3" color="#ED6A0C">￥</font>
-					<font size="4" color="#ED6A0C">{{item.productInfo.attrInfo.price}}</font>
+					<font size="4" color="#ED6A0C">{{item.store_cart.store_product_attr_value.price}}</font>
 				</template>
 				<template #tags>
-					<van-tag plain type="danger">{{item.productInfo.attrInfo.sku}}</van-tag>
+					<van-tag plain type="danger">{{item.store_cart.store_product_attr_value.sku}}</van-tag>
 				</template>
 			</van-card>
 		</template>
-		<van-cell title="快递" :value="order.deliveryName" />
-		<van-cell title="订单号" :value="order.orderId" />
-		<van-cell title="下单时间" :value="order.payTime" />
-		<van-cell title="运费" :value="order.payPostage==0?'免运费':order.payPostage" />
-		<van-cell title="优惠" :value="order.payPostage==0?'无优惠':order.couponPrice" />
-		<van-cell title="总金额" :value="order.payPrice" />
-		<van-cell title="支付方式" :value="order.statusDto.payType" />
+		<van-cell title="快递" :value="order.delivery_name" />
+		<van-cell title="订单号" :value="order.order_id" />
+		<van-cell title="下单时间" :value="order.pay_time" />
+		<van-cell title="运费" :value="'免运费'" />
+		<van-cell title="总金额" :value="order.pay_price" />
+		<van-cell title="支付方式" value="余额" />
 
 	</div>
 </template>
 
 <script>
 	import {
-		order
+		getOrder
 	} from "@/api/order.js"
 	export default {
 		data() {
 			return {
-				imgUrls: this.$baseApi,
+			
 				order: {}
 			};
 		},
@@ -56,8 +55,8 @@
 		},
 		methods: {
 			getOrder() {
-				order(this.$route.query.key).then(res => {
-					this.order = res.data
+				getOrder(this.$route.query.key).then(res => {
+					this.order = res.Data
 				})
 			}
 		},
@@ -70,7 +69,7 @@
 	}
 
 	.top {
-		background-image: url(../../../static/userBg.png);
+		background-image: url(../../assets/userBg.png);
 		position: relative;
 	}
 

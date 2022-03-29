@@ -48,11 +48,29 @@ export function handlerPay(data) {
 		data
 	})
 }
+
+
+export function deliverOK(oid) {
+	return request({
+		url: '/deliverOK/'+oid,
+		method: 'post',
+	})
+}
+
+export function getOrder(data) {
+	return request({
+		url: '/order/'+data,
+		method: 'GET'
+	})
+}
+
 export default {
 	order,
 	confirm,
 	updateOrderAddress,
 	payOrder,
 	cancelOrder,
-	handlerPay
+	handlerPay,
+	deliverOK,
+	getOrder
 }

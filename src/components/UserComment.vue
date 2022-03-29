@@ -11,7 +11,7 @@
               width="40"
               height="40"
               fit="cover"
-              :src="$baseUrl+'/file/' + commentData.commentInfo.avatar"
+              :src="$baseUrl+ commentData.commentInfo.avatar"
             ></van-image
           ></van-col>
           <van-col>

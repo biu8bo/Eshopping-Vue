@@ -309,14 +309,16 @@ export default {
         }
       });
       str = str.substring(0, str.length - 1);
-
       //设置组合预览的图片
       let attrValues = this.productData.storeProductAttrValues;
       for (let index = 0; index < attrValues.length; index++) {
         const element = attrValues[index];
-        if (element.image != null && element.image != "") {
-          this.goods.picture = this.$baseUrl + element.image;
+       if (element.id===skuValue.selectedSkuComb.id) {
+          if (element.image != null && element.image != "") {
+           this.goods.picture = this.$baseUrl + element.image;
         }
+        return
+       }
       }
       this.selectSku = str;
     },

@@ -45,12 +45,13 @@
       </div>
     </div>
     <div class="body">
-      <div class="card" v-for="(item, index) in OrderData" :key="index">
+      <div  class="card" v-for="(item, index) in OrderData" :key="index">
         <p>
           <span>订单编号:{{ item.order_id }}</span>
           <span class="time">{{ parseTime(item.create_time) }}</span>
         </p>
         <van-card
+          @click="$router.push({name:'orderDetail',query:{key:item.order_id}})"
           v-for="(e, i) in item.store_order_cart_info"
           :key="i"
           :num="e.store_cart.cart_num"
@@ -66,15 +67,20 @@
           </template>
           <template #footer>
             <div v-if="active == 0">
-              <van-button @click="handlerPay(item.order_id)" size="mini"
+              <van-button @click.stop="handlerPay(item.order_id)" size="mini"
                 >立即付款</van-button
               >
-              <van-button @click="cancelOrder(item.order_id)" size="mini"
+              <van-button @click.stop="cancelOrder(item.order_id)" size="mini"
                 >取消付款</van-button
               >
             </div>
+            <div v-if="active == 2">
+              <van-button @click.stop="deliverOK(item.order_id)" size="mini"
+                >确认收货</van-button
+              >
+            </div>
             <div v-if="active == 3">
-              <van-button @click="replay(item.order_id)" size="mini"
+              <van-button @click.stop="replay(item.order_id)" size="mini"
                 >立即评论</van-button
               >
             </div>
@@ -92,17 +98,19 @@
    <van-loading v-show="isload" type="spinner" color="#1989fa" />
   </div>
 </van-overlay>
-    <van-loading
+<div style="text-align:center">
+      <van-loading
       v-if="loading"
       color="#0094ff"
       size="20px"
       style="display: inline-block; position: none"
       type="spinner"
     />
+</div>
   </div>
 </template>
 <script>
-import { order, cancelOrder, handlerPay } from "@/api/order.js";
+import { order, cancelOrder, handlerPay,deliverOK } from "@/api/order.js";
 import { getBalance } from "@/api/user.js";
 import { parseTime } from "@/utils";
 export default {
@@ -122,7 +130,7 @@ export default {
   },
   created() {
     this.active = Number(this.$route.query.type ?? 0);
-    this.getOrder();
+    this.getOrder()
     this.getBalance();
     let vm = this;
     window.onscroll = function () {
@@ -144,13 +152,24 @@ export default {
   },
   watch: {
     active(n, o) {
-      console.log(n);
-      this.active = n;
       this.OrderData = [];
+      this.active = n;
+      this.page=1;
+   
       this.getOrder();
     },
   },
   methods: {
+    deliverOK(id){
+      deliverOK(id).then(e=>{
+         this.$toast.success("收货成功!");
+        this.$router.push({name:"Order",query:{type:3}});
+       this.OrderData=[];
+       this.getOrder();
+       this.active=3;
+        this.$forceUpdate();
+      })
+    },
     //点击加载更多
     more() {
        if (this.hasNext) {
@@ -188,7 +207,7 @@ export default {
         Page: this.page,
         Limit: this.limit,
       }).then((e) => {
-        this.OrderData = [];
+        this.loading=false;
         this.hasNext = e.Data.HasNext;
         this.OrderData.push(...e.Data.Data);
         this.isload=false;

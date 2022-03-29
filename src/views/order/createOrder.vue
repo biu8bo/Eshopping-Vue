@@ -123,7 +123,7 @@
             :value="'¥ ' + orderInfo.priceGroup.totalPrice.toFixed(2)"
           />
 
-          <van-cell title="运费" value="免邮费" />
+          <van-cell  title="运费" value="免邮费" />
           <van-field v-model="mark" label="备注" placeholder="请输入备注" />
         </van-cell>
       </template>

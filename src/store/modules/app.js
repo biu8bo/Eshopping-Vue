@@ -4,7 +4,8 @@ const state = {
 	userName: '',
 	token: '',
 	user: '',
-	commentData:{}
+	commentData:{},
+	orderData:{}
 }
 
 
@@ -20,6 +21,9 @@ const mutations = {
 	SAVE_User(state, user) {
 		state.user = user
 		localStorage.setItem("user", JSON.stringify(user))
+	},
+	SET_OrderData(state,orderData){
+	state.orderData=orderData
 	},
 	logout(state) {
 		state.token = null;

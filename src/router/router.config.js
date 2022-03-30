@@ -175,6 +175,18 @@ export const constantRouterMap = [{
 				canSearch:false
 			}
 		},{
+			path: '/user/orderComment',
+			name: 'OrderComment',
+			component: () => import('@/views/comment/userComment'),
+			meta: {
+				title: '用户评论',
+				keepAlive: false,
+				tabBar:false,
+				navBar:true,
+				requireAuth:true,
+				canSearch:false
+			}
+		},{
 			path: '/user/address',
 			name: 'Address',
 			component: () => import('@/views/contactList/contactList'),

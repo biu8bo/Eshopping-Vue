@@ -45,14 +45,22 @@
       </div>
     </div>
     <div class="body">
-      <div  class="card" v-for="(item, index) in OrderData" :key="index">
+      <div class="card" v-for="(items, index) in OrderData" :key="index">
         <p>
-          <span>订单编号:{{ item.order_id }}</span>
-          <span class="time">{{ parseTime(item.create_time) }}</span>
+          <span>订单编号:{{ items.order_id }}</span>
+          <span v-if="active == 0" class="time">{{
+            parseTime(items.create_time)
+          }}</span>
+          <span v-else class="time">{{ parseTime(items.update_time) }}</span>
         </p>
         <van-card
-          @click="$router.push({name:'orderDetail',query:{key:item.order_id}})"
-          v-for="(e, i) in item.store_order_cart_info"
+          @click="
+            $router.push({
+              name: 'orderDetail',
+              query: { key: items.order_id, active: active },
+            })
+          "
+          v-for="(e, i) in items.store_order_cart_info"
           :key="i"
           :num="e.store_cart.cart_num"
           :price="e.store_cart.store_product_attr_value.price.toFixed(2)"
@@ -65,27 +73,41 @@
               e.store_cart.store_product_attr_value.sku
             }}</van-tag>
           </template>
-          <template #footer>
+        </van-card>
+        <div style="background: #fafafa; height: 30px">
+          <div style="float: right; margin-right: 15px">
             <div v-if="active == 0">
-              <van-button @click.stop="handlerPay(item.order_id)" size="mini"
+              <van-button
+                @click.stop="handlerPay(items.order_id)"
+                size="mini"
+                plain
+                type="info"
                 >立即付款</van-button
               >
-              <van-button @click.stop="cancelOrder(item.order_id)" size="mini"
+              <van-button @click.stop="cancelOrder(items.order_id)" size="mini"
                 >取消付款</van-button
               >
             </div>
             <div v-if="active == 2">
-              <van-button @click.stop="deliverOK(item.order_id)" size="mini"
+              <van-button
+                @click.stop="deliverOK(items.order_id)"
+                size="mini"
+                plain
+                type="primary"
                 >确认收货</van-button
               >
             </div>
             <div v-if="active == 3">
-              <van-button @click.stop="replay(item.order_id)" size="mini"
+              <van-button
+                @click.stop="replay(items)"
+                size="mini"
+                plain
+                type="warning"
                 >立即评论</van-button
               >
             </div>
-          </template>
-        </van-card>
+          </div>
+        </div>
       </div>
     </div>
     <van-empty
@@ -94,23 +116,23 @@
       :image="emptyImg"
     />
     <van-overlay :show="isload">
-  <div class="wrapp" @click.stop>
-   <van-loading v-show="isload" type="spinner" color="#1989fa" />
-  </div>
-</van-overlay>
-<div style="text-align:center">
+      <div class="wrapp" @click.stop>
+        <van-loading v-show="isload" type="spinner" color="#1989fa" />
+      </div>
+    </van-overlay>
+    <div style="text-align: center">
       <van-loading
-      v-if="loading"
-      color="#0094ff"
-      size="20px"
-      style="display: inline-block; position: none"
-      type="spinner"
-    />
-</div>
+        v-if="loading"
+        color="#0094ff"
+        size="20px"
+        style="display: inline-block; position: none"
+        type="spinner"
+      />
+    </div>
   </div>
 </template>
 <script>
-import { order, cancelOrder, handlerPay,deliverOK } from "@/api/order.js";
+import { order, cancelOrder, handlerPay, deliverOK } from "@/api/order.js";
 import { getBalance } from "@/api/user.js";
 import { parseTime } from "@/utils";
 export default {
@@ -120,7 +142,7 @@ export default {
       emptyImg: require("./img/noOrder.png"),
       OrderData: [],
       hasNext: false,
-      isload:false,
+      isload: false,
       page: 1,
       loading: false,
       limit: 10,
@@ -130,7 +152,7 @@ export default {
   },
   created() {
     this.active = Number(this.$route.query.type ?? 0);
-    this.getOrder()
+    this.getOrder();
     this.getBalance();
     let vm = this;
     window.onscroll = function () {
@@ -154,31 +176,34 @@ export default {
     active(n, o) {
       this.OrderData = [];
       this.active = n;
-      this.page=1;
-   
+      this.page = 1;
+
       this.getOrder();
     },
   },
   methods: {
-    deliverOK(id){
-      deliverOK(id).then(e=>{
-         this.$toast.success("收货成功!");
-        this.$router.push({name:"Order",query:{type:3}});
-       this.OrderData=[];
-       this.getOrder();
-       this.active=3;
+    deliverOK(id) {
+      deliverOK(id).then((e) => {
+        this.$toast.success("收货成功!");
+        this.$router.push({ name: "Order", query: { type: 3 } });
+        this.OrderData = [];
+        this.getOrder();
+        this.active = 3;
         this.$forceUpdate();
-      })
+      });
     },
     //点击加载更多
     more() {
-       if (this.hasNext) {
-      this.loading = true;
-      this.page++;
-      this.getOrder();
+      if (this.hasNext) {
+        this.loading = true;
+        this.page++;
+        this.getOrder();
       }
     },
-    replay() {},
+    replay(data) {
+      this.$store.commit("SET_OrderData", data);
+      this.$router.push({ name: "OrderComment" });
+    },
     getBalance() {
       getBalance().then((e) => {
         this.userPriceData = e.Data;
@@ -189,6 +214,8 @@ export default {
         orderKey,
       }).then((e) => {
         this.$toast.success("支付成功!");
+        this.OrderData = [];
+        this.active = 1;
         this.getOrder();
       });
     },
@@ -201,16 +228,16 @@ export default {
       });
     },
     getOrder() {
-      this.isload=true;
+      this.isload = true;
       order({
         orderType: this.active,
         Page: this.page,
         Limit: this.limit,
       }).then((e) => {
-        this.loading=false;
+        this.loading = false;
         this.hasNext = e.Data.HasNext;
         this.OrderData.push(...e.Data.Data);
-        this.isload=false;
+        this.isload = false;
         this.$forceUpdate();
       });
     },
@@ -219,7 +246,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .warpper {
-   .wrapp {
+  .wrapp {
     display: flex;
     align-items: center;
     justify-content: center;

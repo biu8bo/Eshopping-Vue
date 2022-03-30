@@ -7,7 +7,7 @@
           round
           width="64"
           height="64"
-          :src="$baseUrl + '/file/' + User.avatar"
+          :src="User.avatar"
         />
       </div>
       <div class="right">

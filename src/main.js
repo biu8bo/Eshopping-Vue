@@ -22,6 +22,14 @@ Vue.use(ImagePreview);
 //通知
 import { NoticeBar } from 'vant';
 Vue.use(NoticeBar);
+import { Step, Steps } from 'vant';
+
+Vue.use(Step);
+Vue.use(Steps);
+//评分
+import { Rate } from 'vant';
+
+Vue.use(Rate);
 // 引入全局样式
 import '@/assets/css/index.scss'
 // 移动端适配

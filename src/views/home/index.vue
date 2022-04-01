@@ -4,11 +4,23 @@
     <!-- 搜索end -->
     <div class="warpper">
       <van-sticky :offset-top="0">
-        <van-search
-          shape="round"
-          placeholder="请输入搜索关键词"
-          @focus="onfocus"
-        />
+        <div class="topSearch">
+          <div style="background:#FFF">
+            <van-image
+            style="padding:10px 0px 5px 5px"
+              fit="contain"
+              width="0.75rem"
+              height="0.75rem"
+              src="./logo.png"
+            />
+          </div>
+          <van-search
+            style="flex: 1"
+            shape="round"
+            placeholder="请输入搜索关键词"
+            @focus="onfocus"
+          />
+        </div>
       </van-sticky>
 
       <!-- 轮播图end -->
@@ -18,7 +30,7 @@
         </van-swipe-item>
       </van-swipe>
       <van-notice-bar
-      style="height:35px"
+        style="height: 35px"
         left-icon="volume-o"
         text="在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。"
       />
@@ -79,9 +91,11 @@
         >
           <div style="height: 28px; line-height: 35px; padding: 5px">
             <font size="3" style="margin-left: 5px">热门臻选</font>
-            <span class="float-left" @click="$router.push({name:'ProductList'})">
-              <font size="2" 
-                >更多商品<van-icon name="arrow" /></font
+            <span
+              class="float-left"
+              @click="$router.push({ name: 'ProductList' })"
+            >
+              <font size="2">更多商品<van-icon name="arrow" /></font
             ></span>
           </div>
           <div style="margin-top: 10px">
@@ -145,16 +159,21 @@
                 </div>
               </div>
               <div class="price">
-              <div style="    height: 25px;
+                <div
+                  style="    height: 25px;
     line-height: 25px;
-}">
-                  <font color="#f10404" style="margin-left: 5px; font-size: 16px">
-                  <font size="2">￥</font>{{ item.price.toFixed(2) }}</font
+}"
                 >
-                <font style="float: right; margin-right: 10px; color: gray"
-                  >仅剩：{{ item.stock }}件</font
-                >
-              </div>
+                  <font
+                    color="#f10404"
+                    style="margin-left: 5px; font-size: 16px"
+                  >
+                    <font size="2">￥</font>{{ item.price.toFixed(2) }}</font
+                  >
+                  <font style="float: right; margin-right: 10px; color: gray"
+                    >仅剩：{{ item.stock }}件</font
+                  >
+                </div>
               </div>
             </div></van-col
           >
@@ -251,6 +270,9 @@ export default {
   }
 }
 .warpper {
+  .topSearch {
+    display: flex;
+  }
   background-color: #f8f8f8;
   padding: 5px;
 }

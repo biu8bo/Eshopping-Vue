@@ -63,6 +63,13 @@ export function getOrder(data) {
 		method: 'GET'
 	})
 }
+export function comment(data) {
+	return request({
+		url: '/comment',
+		method: 'POST',
+		data
+	})
+}
 
 export default {
 	order,
@@ -72,5 +79,6 @@ export default {
 	cancelOrder,
 	handlerPay,
 	deliverOK,
-	getOrder
+	getOrder,
+	comment
 }

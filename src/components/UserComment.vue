@@ -18,7 +18,7 @@
             <div style="font-weight: 500; font-size: 15px; height: 20px">
               {{ commentData.commentInfo.nickname }}
             </div>
-            <div style="color: gray; font-size: 13px">{{ showTime }}  <span style="padding-left:10px"> 规格：</span><span v-if="commentData.productInfo==null">无</span> <span v-if="commentData.productInfo!=null">{{commentData.productInfo.cart_info.productInfo.attrInfo.sku}}</span></div>
+            <div style="color: gray; font-size: 13px">{{ showTime }}  <span style="padding-left:10px"> 规格：</span><span v-if="commentData.productInfo==null">无</span> <span v-else>{{commentData.productInfo.cart_info.attrInfo.sku}}</span></div>
           </van-col>
           <van-col>
           </van-col>
@@ -97,7 +97,7 @@ export default {
 
 
 .border-radius /deep/ img{
-    border: 8px;
+    border-radius: 8px;
 }
 .border-radius-left /deep/ img{
     border-top-left-radius: 8px;

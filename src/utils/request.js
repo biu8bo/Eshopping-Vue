@@ -42,7 +42,7 @@ service.interceptors.response.use(
     response => {
         Toast.clear()
         const res = response.data
-        if (res.Code && res.Code !== 200) {
+        if (res.Code && res.Code != 200) {
             // 登录超时,重新登录
             if (res.Code == '401') {
                 router.push({ path: "/login" })
@@ -53,7 +53,7 @@ service.interceptors.response.use(
 
                 Toast.fail(res.Msg)
             }
-            if (res.Code == '500') {
+            if (res.Code == 500) {
                 router.push({ name: 'NullPage', params: { msg: res.Msg } })
             }
             return Promise.reject(res || 'error')
@@ -63,7 +63,7 @@ service.interceptors.response.use(
     },
     error => {
         Toast.clear()
-        console.log('err' + response.data) // for debug
+        Toast.fail(response.data.Msg)
         return Promise.reject(response.data)
     }
 )

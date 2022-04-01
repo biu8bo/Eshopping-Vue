@@ -28,6 +28,7 @@
         </van-steps>
     <template v-for="(item, index) in order.store_order_cart_info">
       <van-card
+        @click="$router.push('/productDetails?id=' + item.store_product.id)"
         :key="index"
         :num="item.cart_num"
         :desc="item.store_product.store_info"

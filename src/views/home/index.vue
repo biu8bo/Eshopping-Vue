@@ -57,15 +57,18 @@
           style="width: 100%; background-color: #ffffff; margin-top: 8px"
         >
           <div style="height: 28px; line-height: 35px; padding: 5px">
-            <font size="3" style="margin-left: 5px">限时秒杀</font>
-            <font size="2" class="float-left"
-              >秒杀专区<van-icon name="arrow"
-            /></font>
+            <font size="3" style="margin-left: 5px">新品推荐</font>
+            <span
+              class="float-left"
+              @click="$router.push({ name: 'ProductList' })"
+            >
+              <font size="2">更多商品<van-icon name="arrow" /></font
+            ></span>
           </div>
           <div style="margin-top: 10px">
             <van-grid square :column-num="4" :border="false">
               <van-grid-item
-                v-for="(item, index) in guesslikes"
+                v-for="(item, index) in newProduct"
                 style="margin-bottom: 10px"
                 :key="index"
                 :to="'/productDetails?id=' + item.id"
@@ -160,9 +163,8 @@
               </div>
               <div class="price">
                 <div
-                  style="    height: 25px;
-    line-height: 25px;
-}"
+                  style="height: 25px;
+    line-height: 25px;"
                 >
                   <font
                     color="#f10404"
@@ -185,7 +187,7 @@
 
 <script>
 import titleImg from "@/assets/title1.png";
-import { getMenus, getLike, getHotList, getBanner } from "@/api/home.js";
+import { getMenus, getLike, getHotList, getBanner,newProduct } from "@/api/home.js";
 export default {
   data() {
     return {
@@ -195,6 +197,7 @@ export default {
       hotList: [],
       bannerData: [],
       guesslikes: [],
+      newProduct:[],
       titleImg,
       value: "",
     };
@@ -218,6 +221,9 @@ export default {
       getBanner().then((res) => {
         this.bannerData = res.Data;
       });
+      newProduct().then(res=>{
+        this.newProduct = res.Data.Data;
+      })
     },
     goto(url) {
       this.$router.push(url);

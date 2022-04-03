@@ -32,10 +32,17 @@ export function getMenus() {
 		method: 'get'
 	})
 }
+export function newProduct() {
+	return request({
+		url: '/index/newProduct',
+		method: 'get'
+	})
+}
 
 export default {
 	getMenus,
 	getLike,
 	getHotList,
-	getBanner
+	getBanner,
+	newProduct
 }

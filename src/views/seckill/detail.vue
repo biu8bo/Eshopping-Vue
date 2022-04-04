@@ -62,8 +62,8 @@
         </div>
 
         <div style="padding: 10px">
-          <p class="title">{{ productData.store_name }}</p>
-          <p class="title2">{{ productData.store_info }}</p>
+          <p class="title">{{ seckillData.info.title }}</p>
+          <p class="title2">{{ seckillData.info.info }}</p>
         </div>
       </div>
 
@@ -107,7 +107,7 @@
         </van-cell-group>
       </div>
       <!-- 图文描述 -->
-      <div v-html="productData.description"></div>
+      <div v-html="this.seckillData.info.description"></div>
     </div>
     <div>
       <div>
@@ -116,7 +116,7 @@
           :hide-quota-text="true"
           :show-add-cart-btn="false"
           buy-text="立即抢购"
-          v-model="show"
+           v-model="show"
           :sku="sku"
           :goods="goods"
           :goods-id="pid"
@@ -157,7 +157,7 @@
 
 <script>
 import { addCollect } from "@/api/collect.js";
-import { getSeckillByID } from "@/api/seckill.js";
+import { getSeckillByID, Seckill } from "@/api/seckill.js";
 
 import { parseTime } from "@/utils";
 export default {
@@ -165,7 +165,7 @@ export default {
     return {
       countDownTime: "",
       current: 0,
-      pid: this.$route.query.id,
+      pid: "",
       sliderImg: [],
       productData: [],
       seckillData: [],
@@ -235,16 +235,16 @@ export default {
       });
     },
     onBuyClicked(skuData) {
-      addCart({
+      Seckill({
         unique: skuData.selectedSkuComb.unique,
-        productId: skuData.goodsId,
+        productId: this.productData.id,
         num: skuData.selectedNum,
+        sid: this.sid,
       }).then((e) => {
+        this.$store.commit("SET_OrderData",e.Data)
         this.$router.push({
-          name: "CreateOrder",
-          query: {
-            ids: e.Data,
-          },
+          name: "SeckillCreateOrder",
+          query:{sid:this.sid}
         });
         this.show = false;
       });
@@ -292,13 +292,14 @@ export default {
       getSeckillByID(this.sid).then((e) => {
         this.seckillData = e.Data.seckill;
         this.productData = e.Data.product;
+        this.pid =this.productData.id
         //倒计时初始化
         let configData = JSON.parse(this.seckillData.time.value);
         this.startTime = configData.time;
         this.continuedTime = configData.continued;
         this.startCountDownTime();
         this.isCollect = this.productData.isCollect;
-        this.sliderImg = e.Data.product.slider_image.split(",");
+        this.sliderImg = this.seckillData.info.images.split(",");
         this.goods.picture = this.$baseUrl + this.sliderImg[0];
         this.sku.stock_num = this.productData.stock;
         this.sku.price = this.seckillData.info.price.toFixed(2);

@@ -24,7 +24,8 @@
         </template>
       </van-tab>
     </van-tabs>
-    <van-row gutter="8">
+<div class="warpper">
+      <van-row gutter="8">
       <van-col
         style="margin-bottom: 8px"
         v-for="(item, index) in PData"
@@ -61,6 +62,7 @@
         </div></van-col
       >
     </van-row>
+</div>
         <van-empty
       v-if="PData.length == 0"
       class="custom-image"
@@ -91,7 +93,7 @@ export default {
       //现在时间
       let nowData = new Date().getHours();
       let tipStr = "";
-      if (n.map.time <= nowData && n.map.time + n.map.continued >= nowData) {
+      if (n.map.time <= nowData && n.map.time + n.map.continued > nowData) {
         tipStr = "抢购中";
 
         if (!vm.timeID) {
@@ -104,7 +106,7 @@ export default {
       if (nowData < n.map.time) {
         tipStr = "未开始";
       }
-      if (n.map.time + n.map.continued < nowData) {
+      if (n.map.time + n.map.continued <= nowData) {
         tipStr = "已结束";
       }
 

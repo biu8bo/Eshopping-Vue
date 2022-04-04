@@ -96,6 +96,16 @@ export const constantRouterMap = [{
 			tabBar: true,
 			navBar: false
 		}
+	}, {
+		path: '/seckill/createOrder',
+		name: 'SeckillCreateOrder',
+		component: () => import('@/views/seckill/seckillCreateOrder'),
+		meta: {
+			title: '创建订单',
+			keepAlive: false,
+			tabBar: true,
+			navBar: true
+		}
 	},
 	{
 		path: '/ProductList',

@@ -25,9 +25,27 @@ export function getSeckillByID(id) {
         
 	})
 }
+export function Seckill(data) {
+	return request({
+		url: '/Seckill',
+		method: 'POST',
+        data
+        
+	})
+}
+export function SeckillPay(data) {
+	return request({
+		url: '/SeckillPay',
+		method: 'POST',
+        data
+        
+	})
+}
 
 export default {
     getSeckillTime,
     getSeckill,
-	getSeckillByID
+	getSeckillByID,
+	Seckill,
+	SeckillPay
 }

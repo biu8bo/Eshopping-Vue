@@ -32,7 +32,7 @@
       <van-notice-bar
         style="height: 35px"
         left-icon="volume-o"
-        text="在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。"
+        :text="notify"
       />
       <!-- 菜单 -->
       <div style="background-color: #ffffff; margin-top: 5px">
@@ -187,7 +187,7 @@
 
 <script>
 import titleImg from "@/assets/title1.png";
-import { getMenus, getLike, getHotList, getBanner,newProduct } from "@/api/home.js";
+import { getMenus, getLike, getHotList, getBanner,newProduct,getNotify } from "@/api/home.js";
 export default {
   data() {
     return {
@@ -200,13 +200,20 @@ export default {
       newProduct:[],
       titleImg,
       value: "",
+      notify:""
     };
   },
 
   created() {
     this.getData();
+    this.getNotify()
   },
   methods: {
+    getNotify(){
+      getNotify().then(e=>{
+        this.notify=e.Data.value
+      })
+    },
     getData() {
       getMenus().then((res) => {
         this.menus = res.Data;

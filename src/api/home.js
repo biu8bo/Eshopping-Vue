@@ -24,6 +24,13 @@ export function getLike() {
 		method: 'get'
 	})
 }
+//首页  通知
+export function getNotify() {
+	return request({
+		url: '/index/getNotify',
+		method: 'get'
+	})
+}
 
 //首页  菜单
 export function getMenus() {
@@ -44,5 +51,6 @@ export default {
 	getLike,
 	getHotList,
 	getBanner,
-	newProduct
+	newProduct,
+	getNotify
 }

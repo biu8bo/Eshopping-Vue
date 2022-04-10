@@ -9,6 +9,13 @@ export function order(data) {
 		data
 	})
 }
+export function alipay(data) {
+	return request({
+		url: '/alipay',
+		method: 'post',
+		data
+	})
+}
 
 export function confirm(data) {
 	return request({
@@ -80,5 +87,6 @@ export default {
 	handlerPay,
 	deliverOK,
 	getOrder,
-	comment
+	comment,
+	alipay
 }

@@ -129,10 +129,41 @@
         type="spinner"
       />
     </div>
+    <van-popup v-model="show"  position="bottom" round closeable :style="{ height: '30%' }">
+     <div style="margin-top:30px;padding:10px">
+        <van-radio-group  v-model="radio">
+        <van-cell center icon="shop-o">
+          <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+          <template #title>
+            <span class="custom-title">余额</span>
+          </template>
+
+          <template #right-icon>
+            <span
+              style="color: gray; margin-right: 15px; font-size: 8px"
+              class="custom-title"
+              >￥{{ userPriceData.nowMoney}}</span
+            >
+            <van-radio name="1"></van-radio>
+          </template>
+        </van-cell>
+        <van-cell center icon="shop-o">
+          <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+          <template #title>
+            <span class="custom-title">支付宝</span>
+          </template>
+          <template #right-icon>
+            <van-radio name="2"></van-radio>
+          </template>
+        </van-cell> 
+        </van-radio-group>
+        <van-button block color="linear-gradient(to right,#ff6034,#ee0a24)" round @click="pay">立即支付</van-button>
+     </div>
+        </van-popup>
   </div>
 </template>
 <script>
-import { order, cancelOrder, handlerPay, deliverOK } from "@/api/order.js";
+import { order, cancelOrder, handlerPay, deliverOK,alipay } from "@/api/order.js";
 import { getBalance } from "@/api/user.js";
 import { parseTime } from "@/utils";
 export default {
@@ -143,6 +174,9 @@ export default {
       OrderData: [],
       hasNext: false,
       isload: false,
+      radio:"",
+      oid: "",
+      show: false,
       page: 1,
       loading: false,
       limit: 10,
@@ -171,6 +205,13 @@ export default {
         vm.more();
       }
     };
+  },
+  mounted() {
+    if (this.$route.query.tip == 1) {
+      this.$toast.success("支付成功!");
+    } else if (this.$route.query.tip == 0) {
+      this.$toast.fail("支付失败!");
+    }
   },
   watch: {
     active(n, o) {
@@ -209,15 +250,28 @@ export default {
         this.userPriceData = e.Data;
       });
     },
-    handlerPay(orderKey) {
-      handlerPay({
-        orderKey,
+    pay(){
+      if (this.radio==1) {
+         handlerPay({
+        orderKey:this.oid
       }).then((e) => {
         this.$toast.success("支付成功!");
         this.OrderData = [];
         this.active = 1;
         this.getOrder();
       });
+      }else{
+ alipay({
+          orderKey: this.oid,
+          mark: this.mark,
+        }).then((e) => {
+          window.location.href=e
+        });
+      }
+    },
+    handlerPay(orderKey) {
+      this.oid = orderKey;
+      this.show = true;
     },
     cancelOrder(orderKey) {
       cancelOrder({

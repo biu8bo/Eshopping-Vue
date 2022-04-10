@@ -123,7 +123,7 @@
             :value="'¥ ' + orderInfo.priceGroup.totalPrice.toFixed(2)"
           />
 
-          <van-cell  title="运费" value="免邮费" />
+          <van-cell title="运费" value="免邮费" />
           <van-field v-model="mark" label="备注" placeholder="请输入备注" />
         </van-cell>
       </template>
@@ -135,23 +135,23 @@
             <template #title>
               <span class="custom-title">余额</span>
             </template>
-            <template #label>
-              <span class="custom-title">￥{{ userInfo.now_money }}</span>
-            </template>
+
             <template #right-icon>
+              <span
+                style="color: gray; margin-right: 15px; font-size: 8px"
+                class="custom-title"
+                >￥{{ userInfo.now_money }}</span
+              >
               <van-radio name="1"></van-radio>
             </template>
           </van-cell>
           <van-cell center icon="shop-o">
             <!-- 使用 right-icon 插槽来自定义右侧图标 -->
             <template #title>
-              <span class="custom-title">微信</span>
-            </template>
-            <template #label>
-              <span class="custom-title">暂未开通</span>
+              <span class="custom-title">支付宝</span>
             </template>
             <template #right-icon>
-              <van-radio name="1" disabled></van-radio>
+              <van-radio name="2"></van-radio>
             </template>
           </van-cell>
         </van-radio-group>
@@ -159,14 +159,14 @@
 
       <van-submit-bar
         :price="orderInfo.priceGroup.totalPrice * 100"
-        button-text="提交订单"
+        button-text="立即付款"
         @submit="createOrder"
       />
     </template>
   </div>
 </template>
 <script>
-import { confirm, updateOrderAddress, payOrder } from "@/api/order.js";
+import { confirm, updateOrderAddress, payOrder, alipay } from "@/api/order.js";
 import { getAddress } from "@/api/address.js";
 
 import { parseTime } from "@/utils";
@@ -214,11 +214,11 @@ export default {
     },
     //创建订单
     createOrder() {
-      payOrder({
-        orderKey: this.orderKey,
-        mark: this.mark,
-      })
-        .then((e) => {
+      if (this.radio == 1) {
+        payOrder({
+          orderKey: this.orderKey,
+          mark: this.mark,
+        }).then((e) => {
           console.log(e);
           if (e.Code == 200) {
             this.$router.push({ name: "PaySuccess", query: { state: 1 } });
@@ -226,7 +226,15 @@ export default {
           } else if (e.Code == 400) {
             this.$router.push({ name: "PaySuccess", query: { state: 0 } });
           }
-        })
+        });
+      } else {
+        alipay({
+          orderKey: this.orderKey,
+          mark: this.mark,
+        }).then((e) => {
+          window.location.href=e
+        });
+      }
     },
     getOrderInfo() {
       confirm({

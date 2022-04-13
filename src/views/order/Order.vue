@@ -259,6 +259,7 @@ export default {
         this.OrderData = [];
         this.active = 1;
         this.getOrder();
+        this.show=false;
       });
       }else{
  alipay({
